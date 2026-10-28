@@ -1,0 +1,19 @@
+/* تصميم: واجهة هادئة. خلفية حجرية دافئة، حبر داكن، لون واحد خافت، خطوط رفيعة بدل الظلال، وشاشة واحدة لكل مهمة. */
+:root{
+  --f-body:"Readex Pro","Tajawal","Noto Sans Arabic",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-display:"Aref Ruqaa","Amiri","Noto Naskh Arabic",serif;
+  --ev-s:#2f7d4f;--ev-m:#2f6aa3;--ev-l:#a8741a;--ev-g:#7a5fa5;
+  --warn:#f8ecd4;--warn-ink:#6b4410;
+  --shadow:0 8px 24px rgba(40,25,30,.18);
+  --sh:0 1px 2px rgba(90,45,60,.05),0 10px 28px rgba(90,45,60,.07);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ev-s:#6fcf94;--ev-m:#7db5ee;--ev-l:#e3b45f;--ev-g:#b9a0e8;
+  --warn:#3a2f17;--warn-ink:#f0d8a0;
+  --shadow:0 8px 24px rgba(0,0,0,.5);--sh:none;
+}}
+:root[data-theme="dark"]{
+  --ev-s:#6fcf94;--ev-m:#7db5ee;--ev-l:#e3b45f;--ev-g:#b9a0e8;
+  --warn:#3a2f17;--warn-ink:#f0d8a0;
+  --shadow:0 8px 24px rgba(0,0,0,.5);--sh:none;
+}
