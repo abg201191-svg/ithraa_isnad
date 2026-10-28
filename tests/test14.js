@@ -1,0 +1,24 @@
+const { chromium } = require('playwright');
+(async () => {
+  const b = await chromium.launch(); const errs=[];
+  const ctx = await b.newContext({ viewport:{width:390,height:844}, deviceScaleFactor:2, locale:'ar' });
+  const p = await ctx.newPage();
+  p.on('pageerror', e => errs.push('PAGEERR ' + e.message));
+  await p.goto('file://' + process.cwd() + '/index.html'); await p.waitForTimeout(300);
+  await p.click('.dcard[data-d="1"]'); await p.waitForTimeout(150);
+  console.log('open stages on enter', await p.locator('.stg.open').count(), 'dsw', await p.locator('.dsw').count(), 'play btn', await p.locator('[data-act="play"]').count());
+  await p.screenshot({path:'v10-closed.png'});
+  await p.evaluate(()=>{ S.done[K(1,1,"w",0)]=1;S.done[K(1,1,"w",1)]=1;S.done[K(1,1,"w",2)]=1;S.done[K(1,1,"w",3)]=1;S.done[K(1,1,"w",4)]=1;S.done[K(1,1,"w",5)]=1; S.done[K(1,1,"s",0,0)]=1; S.done[K(1,1,"s",1,0)]=1; S.done[K(1,1,"s",1,1)]=1; save(); render(); });
+  await p.screenshot({path:'v10-progress.png'});
+  await p.click('#stg-1 [data-act="stage"]'); await p.waitForTimeout(100);
+  await p.screenshot({path:'v10-s1.png', fullPage:false});
+  await p.locator('#stg-1').screenshot({path:'v10-s1-card.png'});
+  await p.click('#stg-2 [data-act="stage"]'); await p.waitForTimeout(100);
+  await p.locator('#stg-2').screenshot({path:'v10-s2-card.png'});
+  await p.click('#stg-3 [data-act="stage"]'); await p.waitForTimeout(100);
+  await p.locator('#stg-3').screenshot({path:'v10-s3-card.png'});
+  await p.click('#stg-4 [data-act="stage"]'); await p.waitForTimeout(100);
+  await p.locator('#stg-4').screenshot({path:'v10-s4-card.png'});
+  await p.emulateMedia({colorScheme:'dark'}); await p.evaluate(()=>{S.theme="dark";save();render();}); await p.evaluate(()=>window.scrollTo(0,0)); await p.screenshot({path:'v10-dark.png'});
+  console.log('ERRORS', JSON.stringify(errs)); await b.close();
+})();
