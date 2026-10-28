@@ -172,7 +172,7 @@ function mergeStates(L, C){
 }
 
 /* ============ الحفظ السحابي (اختياري، يتحسّن به الحفظ المحلي ولا يستبدله) ============ */
-var CL = {st:"local", at:0, uid:null, ref:null, timer:null, busy:false, again:false, retry:null, lastPull:0};
+var CL = {st:"local", na:false, at:0, uid:null, ref:null, timer:null, busy:false, again:false, retry:null, lastPull:0};
 function hasProgress(o){
   o = o || S;
   return !!(Object.keys(o.done || {}).length || Object.keys(o.log || {}).length || Object.keys(o.chk || {}).length ||
@@ -257,7 +257,7 @@ function cloudPull(){
 function cloudInit(){
   var c = null;
   try{ c = window.claude; }catch(e){}
-  if(!c || typeof c.use !== "function") return;
+  if(!c || typeof c.use !== "function"){ CL.na = true; return; }
   CL.st = "wait"; paintSync();
   Promise.all([c.use("db"), c.use("user")]).then(function(r){
     var db = r[0], user = r[1];

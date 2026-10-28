@@ -1,8 +1,25 @@
+<!doctype html>
+<html lang="ar">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>لياقة أشواق</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="برنامج تمارين منزلية لثمانية أسابيع بالدمبلات: أربع جلسات أسبوعياً حتى 40 دقيقة، بجهد خفيف وتركيز على استقامة الكتفين والرقبة والورك.">
+<meta name="theme-color" content="#fff9f9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1b1718" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="لياقة أشواق">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="icon" href="icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Readex+Pro:wght@300..700&display=swap">
+<style>:root{color-scheme:light}html{scroll-padding-top:env(safe-area-inset-top,0px)}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
 <style>
 /* تصميم: واجهة هادئة. خلفية حجرية دافئة، حبر داكن، لون واحد خافت، خطوط رفيعة بدل الظلال، وشاشة واحدة لكل مهمة. */
 :root{
@@ -666,6 +683,8 @@ table.tb th:last-child{border-start-end-radius:13px}
 }
 
 </style>
+</head>
+<body>
 <div class="app" dir="rtl" lang="ar">
   <header class="top">
     <button class="logo" data-act="go" data-v="home" aria-label="الرئيسية">لياقة أشواق</button>
@@ -1700,7 +1719,7 @@ function mergeStates(L, C){
 }
 
 /* ============ الحفظ السحابي (اختياري، يتحسّن به الحفظ المحلي ولا يستبدله) ============ */
-var CL = {st:"local", at:0, uid:null, ref:null, timer:null, busy:false, again:false, retry:null, lastPull:0};
+var CL = {st:"local", na:false, at:0, uid:null, ref:null, timer:null, busy:false, again:false, retry:null, lastPull:0};
 function hasProgress(o){
   o = o || S;
   return !!(Object.keys(o.done || {}).length || Object.keys(o.log || {}).length || Object.keys(o.chk || {}).length ||
@@ -1785,7 +1804,7 @@ function cloudPull(){
 function cloudInit(){
   var c = null;
   try{ c = window.claude; }catch(e){}
-  if(!c || typeof c.use !== "function") return;
+  if(!c || typeof c.use !== "function"){ CL.na = true; return; }
   CL.st = "wait"; paintSync();
   Promise.all([c.use("db"), c.use("user")]).then(function(r){
     var db = r[0], user = r[1];
@@ -2261,6 +2280,7 @@ function logOverview(){
 function saveHelp(){
   if(CL.st === "ok" || CL.st === "wait" || CL.st === "err") return "يُحفظ تقدمك تلقائياً على هذا الجهاز، ويُرسل نسخة إلى حسابك فتجدينه حين تفتحين الصفحة من جهاز آخر وأنتِ مسجّلة الدخول. عند تعارض جهازين أدمج البيانات ولا أمسح شيئاً.";
   if(CL.st === "ro") return "يُحفظ تقدمك تلقائياً على هذا الجهاز. للحفظ في الحساب يلزم أن تكون صلاحيتك على الصفحة «مشارِك» (Contributor) أو أعلى.";
+  if(CL.na) return "يُحفظ تقدمك تلقائياً في هذا المتصفح وعلى هذا الجهاز فقط، ولا ينتقل إلى جهاز آخر. على آيفون: اضغطي زر المشاركة ثم «إضافة إلى الشاشة الرئيسية» ليفتح الموقع كتطبيق ويقلّ خطر ضياع تقدمك. وانسخي نسخة احتياطية من الإعدادات من وقت لآخر.";
   return "يُحفظ تقدمك تلقائياً على هذا الجهاز. الحفظ في الحساب يعمل فقط حين تفتحين الصفحة من claude.ai وأنتِ مسجّلة الدخول، وإلا يبقى على هذا المتصفح، فاحتفظي بنسخة احتياطية من الإعدادات.";
 }
 
@@ -2461,7 +2481,7 @@ function refSafe(){
     '<div class="ev"><div class="b">عن روابط الفيديو؟</div><p>الأزرار تفتح بحث يوتيوب باسم التمرين المعروف بالعربي والإنجليزي مع كلمة «للنساء». تأكدتُ أن أسماء التمارين موجودة على يوتيوب، لكن يوتيوب هو من يرتّب النتائج ولا أستطيع ضمان أن تكون المقدِّمة امرأة في كل نتيجة. زر «فيديو موجّه للنساء» اخترته من عنوانه (Female / Ladies / Women) دون أن أراجع الأداء بنفسي، فاختاري ما يناسبك ومن مدرّب أو مدرّبة تثقين بها. عند الشك في الأداء قدّمي الأمان على الشكل.</p></div>' +
     '<div class="ev"><div class="b">متى تظهر النتيجة؟</div><p>لا أضمن أرقاماً. التحسن في الطاقة والقوة والنَّفَس عادة يُحَسّ خلال أسابيع قليلة. أما الاستقامة فالمراجعات تشير إلى أن البرامج الأطول (8 أسابيع فأكثر) قد تكون أفضل، لذلك صُمّم البرنامج لثمانية أسابيع.</p></div>' +
     '<div class="ev"><div class="b">عادات يومية تدعم الاستقامة؟</div><p>قومي وتحرّكي دقيقة أو دقيقتين كل ساعة جلوس، وارفعي الشاشة إلى مستوى العينين، واسحبي الذقن للداخل بضع مرات أثناء اليوم. هذه ممارسة عامة شائعة ولم أتحقق منها كدراسة مستقلة.</p></div>' +
-    '<div class="ev"><div class="b">كيف أحفظ تقدمي؟</div><p>يُحفظ تلقائياً على هذا الجهاز، ويُرسل أيضاً إلى حسابك عندما تفتحين الصفحة من claude.ai وأنتِ مسجّلة الدخول بصلاحية «مشارِك». يمكنك دائماً نسخ نسخة احتياطية من الإعدادات.</p></div>' +
+    '<div class="ev"><div class="b">كيف أحفظ تقدمي؟</div><p>' + (CL.na ? 'يُحفظ تلقائياً في هذا المتصفح وعلى هذا الجهاز فقط. على آيفون أضيفي الموقع إلى الشاشة الرئيسية من زر المشاركة ليفتح كتطبيق ويقلّ خطر ضياع التقدّم. ويمكنكِ دائماً نسخ نسخة احتياطية من الإعدادات.' : 'يُحفظ تلقائياً على هذا الجهاز، ويُرسل أيضاً إلى حسابك عندما تفتحين الصفحة من claude.ai وأنتِ مسجّلة الدخول بصلاحية «مشارِك». يمكنك دائماً نسخ نسخة احتياطية من الإعدادات.') + '</p></div>' +
     '<div class="ev"><div class="b">هل حاسبات النبض والبروتين تشخّص؟</div><p>لا. هي تقديرات عامة من دراسات على مجموعات كبيرة، وتخطئ فردياً. لا تغني عن طبيبتك، خاصة مع الأدوية أو الحمل أو الأمراض المزمنة.</p></div>');
   return h;
 }
@@ -2736,3 +2756,5 @@ document.addEventListener("keydown", function(ev){ if(ev.key === "Escape") close
 })();
 
 </script>
+</body>
+</html>
