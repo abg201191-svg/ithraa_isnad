@@ -32,10 +32,10 @@ function ok(c, m){ console.log((c ? 'PASS ' : 'FAIL ') + m); if(!c) process.exit
   await p.click('.nb[data-v="log"]'); await p.click('[data-act="lseg"][data-v="pu"]');
   await p.fill('#pbpm','72'); await p.waitForTimeout(50);
   ok((await p.locator('#plive').innerText()).includes('وسط النطاق'), 'live preview for 72');
-  await p.fill('#psleep','6'); ok((await p.locator('#pslnote').innerText()).includes('أقل قليلاً'), 'sleep note 6h');
+  ok(await p.locator('#psleep').count()===0, 'sleep field removed from pulse form');
   await p.click('[data-act="psave"]'); await p.waitForTimeout(100);
   const today = await p.evaluate(()=>dkey());
-  ok(await p.evaluate(k=>S.chk[k] && S.chk[k].p===72 && S.chk[k].s===6, today), 'saved today reading');
+  ok(await p.evaluate(k=>S.chk[k] && S.chk[k].p===72, today), 'saved today reading');
   ok(await p.locator('.hrow').count() === 1, 'history row');
   // invalid value rejected
   await p.fill('#pbpm','12'); await p.click('[data-act="psave"]'); ok(await p.evaluate(k=>S.chk[k].p, today)===72, 'invalid not saved');
@@ -69,7 +69,7 @@ function ok(c, m){ console.log((c ? 'PASS ' : 'FAIL ') + m); if(!c) process.exit
   // ---- tools
   await p.fill('#age','28'); ok((await p.locator('#zout').innerText()).includes('188') && (await p.locator('#zout').innerText()).includes('تاناكا'), 'age 28 -> Tanaka 188');
   await p.fill('#age','45'); ok((await p.locator('#zout').innerText()).includes('166') && (await p.locator('#zout').innerText()).includes('غولاتي'), 'age 45 -> Gulati 166');
-  await p.fill('#wt','60'); ok((await p.locator('#pout').innerText()).includes('48') && (await p.locator('#pout').innerText()).includes('96'), 'protein 60kg -> 48-96');
+  await p.fill('#cwt','60'); ok(await p.locator('#t-protein').count()===0 && await p.locator('#t-sleep').count()===0, 'protein and sleep tools removed');
   await p.fill('#age','5'); ok((await p.locator('#zout').innerText()).includes('اكتبي عمرك'), 'invalid age message');
   await p.fill('#age','45'); ok(await p.evaluate(()=>S.age===45 && S.wt===60), 'age/weight stored');
   await p.screenshot({path:'w1-tools.png', fullPage:true});
@@ -80,7 +80,7 @@ function ok(c, m){ console.log((c ? 'PASS ' : 'FAIL ') + m); if(!c) process.exit
   for(const s of ['prog','evid','post','day','safe']){ await p.click('[data-act="rseg"][data-v="'+s+'"]'); await p.waitForTimeout(40); segs.push(s+':'+await p.locator('#main details.acc').count()); await p.screenshot({path:'w1-ref-'+s+'.png', fullPage:true}); }
   console.log(segs.join(' '));
   await p.click('[data-act="rseg"][data-v="evid"]');
-  ok(await p.locator('details.eva').count()===20, '20 evidence topics'); 
+  ok(await p.locator('details.eva').count()===23, '23 evidence topics'); 
   const links = await p.evaluate(()=>[...document.querySelectorAll('details.eva a')].map(a=>a.href)); ok(links.length>=20 && links.every(h=>h.startsWith('https://')), links.length+' source links https');
   // all 12 original evidence ids still present
   ok(await p.evaluate(()=>["who","talk","acsm","lowload","circuit","neck","sh","kyph","hip","glute","lowimp","wall","core"].every(k=>EVGROUPS.some(g=>g[2].indexOf(k)>=0))), 'all original evidence kept (+core)');

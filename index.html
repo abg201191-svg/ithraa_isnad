@@ -682,6 +682,27 @@ table.tb th:last-child{border-start-end-radius:13px}
   .fn{width:38px;height:38px}
 }
 
+/* v12: السعرات والماكروز وتذكير الأدوية */
+.cgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.cgrid .fld label{min-height:40px;display:flex;align-items:flex-end;line-height:1.35}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:start;width:100%;min-height:56px;padding:10px 14px;border:1.5px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink)}
+.opt .b{font-size:15.5px}
+.opt.on{border-color:var(--acc);background:var(--soft);color:var(--soft-ink)}
+.opt.on .muted{color:var(--soft-ink)}
+.mtm{align-self:center;font-weight:700;font-size:17px;padding-inline-start:6px}
+.chk.late .b{color:var(--acc)}
+.medform{padding:14px;border:1.5px dashed var(--line);border-radius:16px;background:var(--bg)}
+.seg.s3 button{padding-inline:4px;font-size:14.5px}
+#cout table.tb th,#cout table.tb td{padding:9px 6px}
+#cout .pres .big{font-size:38px}
+@media (max-width:359px){
+  .cgrid{gap:10px}
+  #cout table.tb{font-size:13px}
+  #cout table.tb th,#cout table.tb td{padding:8px 4px}
+}
+.row.wrap .chip,.tfoot .chip{max-width:100%;white-space:normal;text-align:start}
+
 </style>
 </head>
 <body>
@@ -803,9 +824,27 @@ var EVID = {
     tx:"بيان توافق من الأكاديمية الأمريكية لطب النوم وجمعية أبحاث النوم (2015) بعد مراجعة منهجية للأدبيات: ينبغي للبالغ أن ينام 7 ساعات أو أكثر في الليلة بانتظام لتعزيز صحته المثلى، والنوم أقل من 7 ساعات بانتظام ارتبط بنتائج صحية سلبية. الحد ليس رقماً صارماً لكل ليلة، والمهم الانتظام. ولا أملك دراسة مباشرة تربط النوم بنتائج هذا البرنامج تحديداً.",
     src:[{t:"AASM وSRS: 7 ساعات فأكثر للبالغين", u:"https://aasm.org/seven-or-more-hours-of-sleep-per-night-a-health-necessity-for-adults/"},
          {t:"نص بيان التوافق (JCSM 2015)", u:"https://pmc.ncbi.nlm.nih.gov/articles/PMC4434546/"}]},
-  protein:{t:"البروتين لدعم العضلات", lv:"mid",
-    tx:"تحليل تجميعي لتجارب مقاومة (Morton وزملاؤه 2018) وجد أن الفائدة الإضافية من زيادة البروتين في كسب الكتلة العضلية تتوقف تقريباً عند نحو 1.6 جم لكل كجم من وزن الجسم يومياً. أُجريت الدراسات على بالغين أصحّاء يتدربون بالمقاومة، وكثير منها بمكملات بروتين، وليس على برنامج خفيف مثل هذا. لذلك تعرض الحاسبة مدىً يبدأ من 0.8 جم/كجم، وهو الحد الأدنى الشائع في التوصيات الغذائية (رقم معروف لكني لم أتحقق من نصه المباشر هنا)، وينتهي عند 1.6. وبرنامجك خفيف، فأقدّر أنك لا تحتاجين إلى سقف المدى، وهذا استنتاج مني لا من دراسة. من لديها مرض كلوي أو حمل أو رضاعة فلتسأل طبيبتها أولاً.",
-    src:[{t:"Morton 2018: البروتين والتدريب بالمقاومة (تحليل تجميعي)", u:"https://pubmed.ncbi.nlm.nih.gov/28698222/"}]},
+  energy:{t:"السعرات: كيف أحسب هدفك؟", lv:"mid",
+    tx:"أقدّر حرقك الأساسي بمعادلة ميفلين–سانت جور، لأن مراجعة منهجية (Frankenfield وزملاؤه 2005) على بالغين أصحاء بوزن طبيعي وزائد وجدت أنها أصابت ضمن 10% من القياس الفعلي في أكبر عدد من الأشخاص، مع بقاء أخطاء ملحوظة عند الفرد. وإن أدخلتِ نسبة الدهون استخدمت معادلة كانينغهام (500 + 22 × الكتلة الخالية من الدهون) لأنها تبني على تركيب الجسم. وتجنّبتُ تعميم ميفلين على الرياضيين لأن مراجعة O'Neill 2023 وجدتها قاصرة عندهم، وهذا ليس برنامجك. ثم أضرب في معامل نشاط من فئات منظمة الأغذية والزراعة والصحة العالمية (خفيف 1.40–1.69، نشط 1.70–1.99، شديد 2.00 فأكثر) وأختار قيمة داخل كل فئة (1.40 و1.55 و1.70 و1.90)، واختيار القيمة داخل الفئة مني. أما الهدف فلا أستخدم خصم 500 سعرة ثابتاً، لأن Hall وChow (2013) بيّنا أن قاعدة «3500 سعرة = رطل» تتجاهل أن ميزان الطاقة يتغيّر أثناء النزول، ولأن مراجعة Yoo (2018) ذكرت أن القاعدة بالغت في تقدير النزول في معظم الحالات. فأجعل العجز نسبة من وزنك (هادئ 0.25% ومتوسط 0.5% وأسرع 0.75% من الوزن أسبوعياً)، وأحوّلها إلى سعرات بتقريب 7700 سعرة لكل كجم، وهو تقريب صالح للبداية فقط، ولذلك أعرض لك «المتوقع في البداية» وأطلب منك التعديل حسب وزنك الفعلي بعد 2 إلى 3 أسابيع. الوتائر الثلاث نفسها اخترتُها بحذر: مراجعة Helms (2014) عن متنافسي كمال الأجسام توصي بنزول 0.5 إلى 1% أسبوعياً لفئة نحيفة جداً، فبقيتُ في النصف الأدنى أو دونه. وحددتُ أقصى عجز بـ25% من احتياجك (وضعتُه أنا؛ توصية الجمعيات الأمريكية تذكر 500 أو 750 سعرة أو 30% بديلاً). ولا تنزل السعرات عن 1200 للنساء و1500 للرجال، وهو أدنى مدى في إرشاد AHA/ACC/TOS للسمنة (1200–1500 للنساء و1500–1800 للرجال)، وما دون 800 سعرة يُستخدم بإشراف طبي فقط. ولا أخفّض بالسعرات إن كان مؤشر كتلة جسمك دون 18.5. وكل المعادلات تخطئ نحو ±10% عند الفرد الواحد، فهذا رقم بداية. تعذّر عليّ فتح النص الكامل لمراجعة Helms وقت الكتابة، فرقمها من ملخصها المنشور.",
+    src:[{t:"Frankenfield 2005: دقة معادلات الحرق الأساسي (مراجعة منهجية)", u:"https://pure.psu.edu/en/publications/comparison-of-predictive-equations-for-resting-metabolic-rate-in-/"},
+         {t:"O'Neill 2023: دقة معادلات الحرق عند الرياضيين", u:"https://link.springer.com/content/pdf/10.1007/s40279-023-01896-z.pdf"},
+         {t:"FAO/WHO/UNU: فئات معامل النشاط الجسدي", u:"https://www.fao.org/4/Y4249E/y4249e0j.htm"},
+         {t:"Hall وChow 2013: لماذا قاعدة 3500 سعرة خاطئة", u:"https://www.nature.com/articles/ijo2013112.pdf"},
+         {t:"Yoo 2018: توازن الطاقة الديناميكي", u:"https://pmc.ncbi.nlm.nih.gov/articles/PMC6513301"},
+         {t:"AHA/ACC/TOS: إرشاد إدارة الوزن (مستويات السعرات)", u:"https://pmc.ncbi.nlm.nih.gov/articles/PMC5819889/"},
+         {t:"Helms 2014: التغذية عند التحضير للمنافسات (النزول الأسبوعي)", u:"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4033492/"}]},
+  protein:{t:"البروتين: كم جراماً في اليوم؟", lv:"mid",
+    tx:"تحليل تجميعي لتجارب مقاومة (Morton وزملاؤه 2018، 49 دراسة و1,863 مشاركاً) وجد أن الفائدة الإضافية من زيادة البروتين في كسب الكتلة الخالية من الدهون تتوقف عند نحو 1.62 جم لكل كجم من وزن الجسم يومياً. والإرشادات الغذائية الأمريكية 2025–2030 تذكر 1.2 إلى 1.6 جم/كجم يومياً. لذلك أعرض لك هدفاً ومدىً: عند الثبات 1.4 جم/كجم (المدى 1.2 إلى 1.8)، وعند إنزال الدهون أرفعه إلى 1.8 (المدى 1.6 إلى 2.2) لأن البروتين الأعلى مع عجز السعرات يساعد على حفظ العضل، وهذا موقف الجمعية الدولية لتغذية الرياضيين (ISSN 2017) أيضاً (1.4 إلى 2.0 للمتدرّبين، وأعلى مع العجز). وكل هذه الدراسات على أصحاء يتدربون وكثير منها بمكملات بروتين، لا على برنامج خفيف مثل هذا، فالمدى تقديري. إن كان وزنك أعلى كثيراً من الوزن الصحي (مؤشر كتلة الجسم 30 فأكثر) حسبتُ على وزن معدّل بين وزنك والوزن الصحي كي لا يتضخّم الرقم، وهذا اختيار مني. ولا يتجاوز البروتين 35% من سعراتك. من لديه مرض كلوي أو مشكلة في الكبد يسأل طبيبه قبل زيادة البروتين. تعذّر عليّ فتح نص ISSN الكامل وقت الكتابة، فرقمه من ملخصه المنشور.",
+    src:[{t:"Morton 2018: البروتين والتدريب بالمقاومة (تحليل تجميعي)", u:"https://pubmed.ncbi.nlm.nih.gov/28698222/"},
+         {t:"الإرشادات الغذائية الأمريكية 2025–2030 (ملخص AAFP)", u:"https://www.aafp.org/afp/2026/0700/practice-guidelines-dietary-guidelines"},
+         {t:"ISSN 2017: موقف الجمعية الدولية لتغذية الرياضيين من البروتين", u:"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5477153/"}]},
+  macros:{t:"الكارب والدهون وتوزيع الوجبات", lv:"logic",
+    tx:"بعد تثبيت السعرات والبروتين أحجز الدهون أولاً: نحو 25% من سعراتك (لا أقل من 0.6 جم/كجم ولا أقل من 20% ولا أكثر من 35%)، لأن الدهون الغذائية تحمل أحماضاً أساسية وفيتامينات تذوب فيها. هذه النسب اخترتُها ضمن النطاقات المعروفة للتوزيع المقبول للدهون (20 إلى 35% من السعرات)، ولم أجد دراسة تحدد رقماً أدق لشخص بعينه. ثم الباقي كله كارب، وهو الوقود الأساسي لجلسات القوة والحرق الخفيف. والرقم يبقى تقريبياً: 4 سعرات لكل جرام بروتين أو كارب و9 للدهون. أما التوزيع على الوجبات فاقتراح مني: يميل إلى جعل البروتين متقارباً بين الوجبات، لأن مراجعة Schoenfeld وAragon (2018) رأت أن توزيع البروتين على 4 وجبات أو أكثر بنحو 0.4 جم/كجم لكل وجبة قد يكون أنسب لبناء العضل، وأن الدليل على تفضيل توقيت بعينه محدود، فالأهم مجموع اليوم لا تطابق كل وجبة. وللشعور بالشبع والالتزام: الغداء أكبر وجبة والباقي حسب نمطك. لم أستطع فتح النص الكامل لدراسة Schoenfeld وقت كتابة هذا، فرقمها من ملخصها المنشور.",
+    src:[{t:"Schoenfeld وAragon 2018: كم بروتين تستفيد منه العضلات في وجبة", u:"https://pubmed.ncbi.nlm.nih.gov/29497353/"},
+         {t:"الإرشادات الغذائية الأمريكية 2025–2030 (ملخص AAFP)", u:"https://www.aafp.org/afp/2026/0700/practice-guidelines-dietary-guidelines"}]},
+  meds:{t:"تذكير الأدوية: هل ينفع؟", lv:"mid",
+    tx:"فريق الخدمات الوقائية المجتمعية الأمريكي (CPSTF) يوصي بالرسائل النصية القصيرة لزيادة الالتزام بالأدوية عند المصابين بأمراض مزمنة، فقد ارتفع الالتزام بوسيط 13.8 نقطة مئوية في 7 دراسات أُجريت في دول مرتفعة الدخل (نتيجة صدرت عام 2017). هذه الدراسات عن الرسائل النصية، لا عن تنبيهات التقويم ولا عن موقع مثل هذا، فأقيس عليها قياساً منطقياً: تذكير في وقته يقلل النسيان. لذلك أنصح بتنبيهات تقويم الجوال لأنها تعمل والموقع مغلق، والتنبيه داخل الصفحة يعمل ما دامت مفتوحة فقط. الأداة لا تحدد جرعات ولا تنصح بدواء ولا تتحقق مما تكتبينه. ما وصفه الطبيب أو الصيدلي هو المرجع.",
+    src:[{t:"CPSTF: الرسائل النصية لتحسين الالتزام بالأدوية", u:"https://www.thecommunityguide.org/findings/health-information-technology-text-messaging-medication-adherence-chronic-disease"}]},
   cycle:{t:"الدورة الشهرية والتمرين", lv:"low",
     tx:"مراجعة منهجية وتحليل تجميعي (McNulty وزملاؤها 2020) رأى أن أداء التمرين قد ينخفض قليلاً جداً في بداية الطور الجريبي، أي مع بداية الدورة، مقارنةً ببقية الأطوار، لكن الفرق ضئيل وجودة الأدلة منخفضة إلى منخفضة جداً. خلاصتهم أن الأدلة لا تكفي لتعميم تعديل التمرين على الجميع، وأن الأنسب أن يُفرَّد الأمر حسب ما تشعر به كل امرأة. عملياً: إن كنتِ متعبة في بعض الأيام فخففي الوزن أو اكتفي بجولة أقل بدل ترك الجلسة، وإن لم تتأثري فلا حاجة لتغيير شيء. هذا اقتراح عملي مني لا نتيجة دراسة.",
     src:[{t:"McNulty 2020: الطور الشهري وأداء التمرين", u:"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7497427/"}]}
@@ -1137,7 +1176,7 @@ Object.keys(VA).forEach(function(id){ if(EX[id] && EX[id].alt) for(var k in VA[i
 var S = {week:1, done:{}, log:{}, walks:{}, body:{}, alt:{}, gear:{}, pos:{}, chk:{}, pal:"rose", theme:"light", sound:true};
 var PALS = ["rose", "lilac", "sage", "sand"];
 var LVS = {strong:"قوي", mid:"متوسط", low:"محدود", logic:"منطقي"};
-var UI = {view:"home", w:1, d:1, open:{}, stg:{}, wipe:false, ls:"ov", rs:"prog", hall:false};
+var UI = {view:"home", w:1, d:1, open:{}, stg:{}, wipe:false, ls:"ov", rs:"prog", hall:false, mf:null, mdel:null};
 var VOLATILE = {qi:1, qbag:1, qh:1, ts:1, synced:1};
 var SYNCH = "";
 
@@ -1170,6 +1209,10 @@ function normState(){
   if(S.tv !== 2){ if(S.theme === "auto") S.theme = "light"; S.tv = 2; }
   if(typeof S.ts !== "number") S.ts = 0;
   if(typeof S.synced !== "number") S.synced = 0;
+  if(!S.cal || typeof S.cal !== "object" || Array.isArray(S.cal)) S.cal = {};
+  if(!S.med || typeof S.med !== "object" || Array.isArray(S.med)) S.med = {list:[], taken:{}};
+  if(!Array.isArray(S.med.list)) S.med.list = [];
+  if(!S.med.taken || typeof S.med.taken !== "object") S.med.taken = {};
   migrateOrd(S);
 }
 function canon(v){
@@ -1247,6 +1290,8 @@ var ICO = {
   shield:'<path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/>',
   user:'<circle cx="12" cy="5" r="2"/><path d="M12 8v6M8 10h8M12 14l-3 7M12 14l3 7"/>',
   moon:'<path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/>',
+  flame:'<path d="M12 3c.8 3.4 5 5.4 5 10a5 5 0 0 1-10 0c0-2 1-3.4 2-4.4.3 1.4 1 2 2 2.2C10.8 8 11 5.6 12 3z"/>',
+  pill:'<g transform="rotate(-40 12 12)"><rect x="3" y="8" width="18" height="8" rx="4"/><path d="M12 8v8"/></g>',
   flask:'<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/><path d="M8 15h8"/>'
 };
 function ico(n, c){ return '<svg class="' + (c || "") + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICO[n] + '</svg>'; }
@@ -1534,10 +1579,10 @@ function startItem(w, d, blk, j){
 }
 
 var toastT = null;
-function toast(m){
+function toast(m, ms){
   var el = $("#toast"); if(!el) return;
   el.hidden = false; el.innerHTML = '<span>' + esc(m) + '</span>';
-  clearTimeout(toastT); toastT = setTimeout(function(){ el.hidden = true; }, 2400);
+  clearTimeout(toastT); toastT = setTimeout(function(){ el.hidden = true; }, ms || 2400);
 }
 function openSheet(html){
   var sh = $("#shade"); sh.hidden = false;
@@ -1570,12 +1615,6 @@ function pulseBand(b){
   if(b < 120) return {lv:"info", t:"فوق 100", tx:"إن كان بعد جهد أو انفعال أو حرارة أو مرض فقد يكون مؤقتاً.", act:"أعيدي القياس بعد جلوس هادئ 5 دقائق. إن تكرر فوق 100 وأنتِ في الراحة فراجعي طبيبتك."};
   return {lv:"warn", t:"مرتفع جداً في الراحة", tx:"هذا أعلى بكثير من المعتاد في الراحة.", act:"أعيدي القياس بعد الجلوس هادئة. إن بقي مرتفعاً أو صاحبه خفقان أو ضيق نفَس أو ألم صدر أو دوار فاطلبي رعاية طبية."};
 }
-function sleepNote(h){
-  if(!(h > 0)) return "";
-  if(h >= 7) return "نومك " + h + " ساعات: ضمن الموصى به للبالغين (7 ساعات فأكثر بانتظام).";
-  if(h >= 6) return "نومك " + h + " ساعات: أقل قليلاً من 7 ساعات الموصى بها بانتظام. ليلة واحدة لا تقلق، والمهم المعتاد.";
-  return "نومك " + h + " ساعات: أقل بوضوح من 7 ساعات الموصى بها بانتظام. النوم من العوامل التي تؤثر في النبض، فخذي قراءة اليوم بحذر.";
-}
 function bandHTML(b, id){
   var x = pulseBand(b), bad = !(b >= 30 && b <= 200);
   return '<div class="pres ' + x.lv + '"' + (id ? ' id="' + id + '"' : '') + ' role="status">' +
@@ -1590,8 +1629,6 @@ function pulseTrend(){
   if(!used.length) return out;
   var l7 = used.slice(-7).map(function(r){ return r.p; });
   out.avg7 = r1(avg(l7));
-  var sl = used.slice(-7).filter(function(r){ return r.s != null; }).map(function(r){ return r.s; });
-  if(sl.length >= 3) out.sleep7 = r1(avg(sl));
   if(used.length >= 14){
     out.first7 = r1(avg(used.slice(0, 7).map(function(r){ return r.p; })));
     out.diff = r1(out.avg7 - out.first7);
@@ -1644,13 +1681,6 @@ function zonesHTML(age){
     '<tr><td>شديد</td><td class="num">70–85%</td><td class="num b">' + z.vig[0] + ' إلى ' + z.vig[1] + '</td></tr></tbody></table></div>' +
     '<p class="xs muted">تقدير متوسط يخطئ فردياً. في الحرق الخفيف اعتمدي على اختبار الكلام أولاً: تتكلمين لكن لا تغنين = متوسط.</p>';
 }
-function proteinHTML(kg){
-  if(!(kg >= 30 && kg <= 200)) return '<p class="xs muted">اكتبي وزنك بالكيلوجرام (من 30 إلى 200) ليظهر المدى.</p>';
-  var lo = Math.round(kg * 0.8), hi = Math.round(kg * 1.6);
-  return '<div class="zrow"><div><div class="xs muted">المدى التقريبي يومياً</div><div class="big num">' + lo + ' – ' + hi + '<small> جم</small></div></div></div>' +
-    '<p class="xs muted">من 0.8 إلى 1.6 جم لكل كجم. لبرنامج خفيف مثل برنامجك أقدّر أن الجزء الأدنى إلى الأوسط من المدى يكفي (تقدير مني لا من دراسة). عند مرض كلوي أو حمل أو رضاعة اسألي طبيبتك أولاً.</p>';
-}
-
 /* ============ عدّاد النبض بالضغط ============ */
 var PC = {on:false, taps:0, t0:0, tick:null, done:false, bpm:0};
 function pcStop(){ if(PC.tick){ clearInterval(PC.tick); PC.tick = null; } PC.on = false; }
@@ -1701,6 +1731,15 @@ function mergeStates(L, C){
     });
     M.log[id] = Object.keys(map).map(function(q){ return map[q]; });
   });
+  M.cal = Object.assign({}, older.cal || {}, newer.cal || {});
+  var ml = {}; ((older.med || {}).list || []).concat((newer.med || {}).list || []).forEach(function(m){ if(m && m.id && (!ml[m.id] || (m.u || 0) >= (ml[m.id].u || 0))) ml[m.id] = m; });
+  M.med = {list:Object.keys(ml).map(function(i){ return ml[i]; }), taken:{}};
+  var td = {}; Object.keys((older.med || {}).taken || {}).concat(Object.keys((newer.med || {}).taken || {})).forEach(function(d){ td[d] = 1; });
+  Object.keys(td).forEach(function(d){
+    var a = ((older.med || {}).taken || {})[d] || {}, b = ((newer.med || {}).taken || {})[d] || {}, o = {};
+    Object.keys(a).concat(Object.keys(b)).forEach(function(k){ var x = a[k], y = b[k]; o[k] = !x ? y : (!y ? x : ((y.u || 0) >= (x.u || 0) ? y : x)); });
+    M.med.taken[d] = o;
+  });
   M.chk = {};
   var dk = {}; Object.keys(older.chk || {}).concat(Object.keys(newer.chk || {})).forEach(function(d){ dk[d] = 1; });
   Object.keys(dk).forEach(function(d){
@@ -1722,7 +1761,7 @@ function mergeStates(L, C){
 var CL = {st:"local", na:false, at:0, uid:null, ref:null, timer:null, busy:false, again:false, retry:null, lastPull:0};
 function hasProgress(o){
   o = o || S;
-  return !!(Object.keys(o.done || {}).length || Object.keys(o.log || {}).length || Object.keys(o.chk || {}).length ||
+  return !!(Object.keys(o.done || {}).length || Object.keys(o.log || {}).length || Object.keys(o.chk || {}).length || ((o.med || {}).list || []).length ||
     Object.keys(o.body || {}).some(function(w){ var b = o.body[w]; return b && ((b.pulse !== "" && b.pulse != null) || (b.wall || []).some(function(x){ return x; }) || b.note); }));
 }
 function cloudJson(){
@@ -2183,6 +2222,371 @@ function overviewHTML(w, d){
   return h + '</div>';
 }
 
+/* ============ أدواتي: السعرات والماكروز وتذكير الأدوية ============ */
+function gz(f, m){ return (S.cal && S.cal.sex === "m") ? m : f; }
+function fmtN(n){ return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+function rnd(x, step){ return Math.round(x / step) * step; }
+
+/* معاملات النشاط من فئات FAO/WHO/UNU (خفيف 1.40–1.69، نشط 1.70–1.99، شديد 2.00 فأكثر)، وأخذتُ قيماً داخل كل فئة لا الحد الأعلى */
+var CAL_ACT = [
+  {id:"low", n:"قليلة الحركة", d:"جلوس معظم اليوم وبلا تمرين منتظم", f:1.4},
+  {id:"light", n:"خفيفة", d:"مشي يومي أو عمل واقف مع 3 إلى 4 جلسات تمرين خفيفة أسبوعياً", f:1.55},
+  {id:"mod", n:"متوسطة", d:"نشاط يومي واضح مع 4 إلى 5 جلسات تمرين بجهد متوسط", f:1.7},
+  {id:"high", n:"عالية", d:"عمل بدني أو تمرين شبه يومي بجهد عالٍ", f:1.9}
+];
+var CAL_GOALS = [["lose", "أنزّل دهوناً"], ["keep", "أثبّت وزني"], ["gain", "أزيد عضلاً"]];
+var CAL_PACES = {lose:[["slow", "هادئ"], ["mid", "متوسط"], ["fast", "أسرع"]], gain:[["slow", "هادئ"], ["mid", "متوسط"]]};
+var CAL_PCT = {slow:0.25, mid:0.5, fast:0.75};
+var CAL_UP = {slow:0.05, mid:0.10};
+/* [الاسم، حصة السعرات %، حصة البروتين %] */
+var MEAL_SCH = {
+  3:[["الفطور", 30, 33], ["الغداء", 40, 34], ["العشاء", 30, 33]],
+  4:[["الفطور", 25, 27], ["الغداء", 35, 31], ["وجبة خفيفة", 10, 15], ["العشاء", 30, 27]],
+  5:[["الفطور", 25, 24], ["خفيفة صباحية", 10, 12], ["الغداء", 30, 28], ["خفيفة مسائية", 10, 12], ["العشاء", 25, 24]]
+};
+
+function calOf(){
+  var c = S.cal || {};
+  return {sex:c.sex || "", age:+S.age || 0, h:+c.h || 0, w:+S.wt || 0, bf:+c.bf || 0, act:c.act || "light", goal:c.goal || "lose", pace:c.pace || "mid", tw:+c.tw || 0,
+    meals:(+c.meals === 3 || +c.meals === 5) ? +c.meals : 4, pg:!!c.pg};
+}
+
+/* الحساب: حرق أساسي ← احتياج يومي ← هدف بنسبة من وزنك ← ماكروز ← توزيع على الوجبات */
+function calcPlan(c){
+  var miss = [];
+  if(c.sex !== "f" && c.sex !== "m") miss.push("الجنس");
+  if(!(c.age >= 18 && c.age <= 80)) miss.push("العمر (من 18 إلى 80)");
+  if(!(c.h >= 130 && c.h <= 220)) miss.push("الطول (من 130 إلى 220 سم)");
+  if(!(c.w >= 35 && c.w <= 250)) miss.push("الوزن (من 35 إلى 250 كجم)");
+  if(miss.length) return {ok:false, miss:miss};
+  var hm = c.h / 100, bmi = c.w / (hm * hm), flags = [];
+  var bfOk = c.bf >= 5 && c.bf <= 60, ffm = bfOk ? c.w * (1 - c.bf / 100) : null, bmr, method;
+  if(bfOk){ bmr = 500 + 22 * ffm; method = "cun"; }
+  else { bmr = 10 * c.w + 6.25 * c.h - 5 * c.age + (c.sex === "m" ? 5 : -161); method = "mif"; }
+  var act = CAL_ACT.filter(function(a){ return a.id === c.act; })[0] || CAL_ACT[1];
+  var tdee = bmr * act.f, goal = c.goal, pace = c.pace, floor = c.sex === "m" ? 1500 : 1200, target = tdee;
+  if(goal === "lose" && bmi < 18.5){ goal = "keep"; flags.push("nolose"); }
+  if(goal === "lose" && bmi < 20 && pace !== "slow"){ pace = "slow"; flags.push("slowcap"); }
+  if(goal === "gain" && !CAL_UP[pace]) pace = "mid";
+  if(goal === "lose"){
+    var def = (CAL_PCT[pace] || 0.5) / 100 * c.w * 7700 / 7;
+    if(def > 0.25 * tdee){ def = 0.25 * tdee; flags.push("defcap"); }
+    target = tdee - def;
+    if(target < floor){ target = Math.min(floor, tdee); flags.push(floor >= tdee ? "nodef" : "floor"); }
+  }else if(goal === "gain"){
+    target = tdee * (1 + CAL_UP[pace]);
+  }
+  target = rnd(target, 10);
+  var tdeeR = Math.round(tdee), diff = target - tdeeR;
+  var kgWk = Math.abs(diff) * 7 / 7700;
+  if(goal === "lose" && target < bmr) flags.push("belowbmr");
+
+  var ideal = 25 * hm * hm, refW = bmi >= 30 ? ideal + 0.25 * (c.w - ideal) : c.w;
+  var pr = {lose:[1.8, 1.6, 2.2], keep:[1.4, 1.2, 1.8], gain:[1.8, 1.6, 2.2]}[goal];
+  var Pmax = 0.35 * target / 4, P = pr[0] * refW, Plo = pr[1] * refW, Phi = pr[2] * refW;
+  if(P > Pmax){ P = Pmax; flags.push("pcap"); }
+  Plo = Math.min(Plo, P); Phi = Math.min(Phi, Pmax);
+  var F = Math.max(0.25 * target / 9, 0.6 * refW), Fmin = 0.20 * target / 9;
+  F = Math.min(F, 0.35 * target / 9);
+  var C = (target - 4 * P - 9 * F) / 4;
+  if(C < 100){ F = Fmin; C = (target - 4 * P - 9 * F) / 4; }
+  if(C < 100 && P > Plo){ P = Plo; C = (target - 4 * P - 9 * F) / 4; }
+  if(C < 100) flags.push("lowcarb");
+  P = Math.round(P); F = Math.round(F); C = Math.max(0, Math.round((target - 4 * P - 9 * F) / 4));
+  var tot = 4 * P + 9 * F + 4 * C;
+
+  var meals = MEAL_SCH[c.meals].map(function(m){
+    var kc = target * m[1] / 100, p = P * m[2] / 100, f = F * m[1] / 100;
+    return {n:m[0], kc:rnd(kc, 10), p:Math.round(p), f:Math.round(f), c:Math.max(0, Math.round((kc - 4 * p - 9 * f) / 4))};
+  });
+
+  var weeks = null, twLow = false;
+  if(goal === "lose" && c.tw >= 35 && c.tw < c.w){
+    if(c.tw / (hm * hm) < 18.5) twLow = true;
+    else if(kgWk > 0) weeks = Math.ceil((c.w - c.tw) / kgWk);
+  }
+  if(twLow) flags.push("twlow");
+  return {ok:true, flags:flags, bmi:bmi, method:method, act:act, goal:goal, pace:pace, bmr:Math.round(bmr), tdee:tdeeR, target:target, diff:diff, kgWk:kgWk, pctBw:kgWk / c.w * 100,
+    defPct:Math.abs(diff) / tdeeR * 100, refW:refW, P:P, Plo:Math.round(Plo), Phi:Math.round(Phi), F:F, C:C, tot:tot, meals:meals, weeks:weeks, floor:floor, sex:c.sex, w:c.w, tw:c.tw};
+}
+
+function calFlagText(R, f){
+  var g = (R.sex === "m");
+  switch(f){
+    case "nolose": return "مؤشر كتلة جسمك " + R.bmi.toFixed(1) + " (أقل من 18.5، دون الطبيعي)، فلا يُنصح بعجز في السعرات. عُرضت سعرات الثبات. " + (g ? "استشر" : "استشيري") + " مختصاً إن أردت تغيير وزنك.";
+    case "slowcap": return "وزنك قريب من الحد الأدنى للطبيعي، فاقتصرتُ على الوتيرة الهادئة.";
+    case "defcap": return "حدّدتُ العجز بـ 25% من احتياجك، لأن العجز الأكبر يزيد خسارة العضل ويصعّب الالتزام.";
+    case "floor": return "رفعتُ الهدف إلى الحد الأدنى الشائع للأمان (" + fmtN(R.floor) + " سعرة)، فالعجز الذي اخترتَه كان سينزل بك تحته. لذلك سيكون نزولك أبطأ من الوتيرة المختارة. وهذا ما يحدث عند من احتياجه أقل، فخصم 500 ثابتاً يصير قليلاً جداً.";
+    case "nodef": return "احتياجك المقدّر قريب من الحد الأدنى للأمان (" + fmtN(R.floor) + " سعرة)، فلا مجال لعجز بسعرات الطعام. ركّز على التمرين والمشي وجودة الأكل.";
+    case "belowbmr": return "الهدف أقل من حرقك الأساسي المقدّر. لا " + (g ? "تستمر" : "تستمري") + " عليه أكثر من بضعة أسابيع، و" + (g ? "راقب" : "راقبي") + " طاقتك ونومك.";
+    case "pcap": return "خفّضتُ البروتين إلى 35% من سعراتك، وهو الحد الأعلى في التوصيات.";
+    case "lowcarb": return "الكارب أقل من 100 جم وهو منخفض. إن شعرتَ بإرهاق أو دوخة فارفع السعرات أو اختر وتيرة أهدأ.".replace("شعرتَ", g ? "شعرتَ" : "شعرتِ").replace("فارفع", g ? "فارفع" : "فارفعي").replace("اختر", g ? "اختر" : "اختاري");
+    case "twlow": return "وزنك المستهدف يعطي مؤشر كتلة جسم أقل من 18.5 (دون الطبيعي)، فاختر هدفاً أعلى.".replace("فاختر", g ? "فاختر" : "فاختاري");
+  }
+  return "";
+}
+
+function calText(){
+  var c = calOf(), R = calcPlan(c);
+  if(!R.ok) return "";
+  var gl = {lose:"إنزال الدهون", keep:"تثبيت الوزن", gain:"زيادة العضل"}[R.goal];
+  var pc = {slow:"هادئة", mid:"متوسطة", fast:"أسرع"}[R.pace];
+  var t = "خطة السعرات · لياقة أشواق · " + dfmt(dkey()) + "\n";
+  t += "الهدف: " + gl + (R.goal !== "keep" ? " بوتيرة " + pc : "") + "\n";
+  t += "عمر " + c.age + " · طول " + c.h + " سم · وزن " + fmtKg(c.w) + " كجم · نشاط " + R.act.n + "\n\n";
+  t += "الحرق الأساسي المقدّر: " + fmtN(R.bmr) + " سعرة (" + (R.method === "cun" ? "كانينغهام، من نسبة الدهون" : "ميفلين–سانت جور") + ")\n";
+  t += "احتياجي للثبات: " + fmtN(R.tdee) + " سعرة\n";
+  t += "هدفي اليومي: " + fmtN(R.target) + " سعرة";
+  if(R.goal === "lose") t += " (عجز " + fmtN(-R.diff) + "، نحو " + Math.round(R.defPct) + "% من احتياجي)";
+  if(R.goal === "gain") t += " (زيادة " + fmtN(R.diff) + "، نحو " + Math.round(R.defPct) + "%)";
+  t += "\n\nالبروتين: " + R.P + " جم (المدى " + R.Plo + " إلى " + R.Phi + ")\nالكارب: " + R.C + " جم\nالدهون: " + R.F + " جم\n\n";
+  t += "التوزيع على " + R.meals.length + " وجبات:\n";
+  R.meals.forEach(function(m){ t += "- " + m.n + ": " + fmtN(m.kc) + " سعرة · بروتين " + m.p + " · كارب " + m.c + " · دهون " + m.f + "\n"; });
+  if(R.goal !== "keep" && R.kgWk > 0) t += "\nالمتوقع في البداية: نحو " + (Math.round(R.kgWk * 100) / 100) + " كجم أسبوعياً (" + (Math.round(R.pctBw * 100) / 100) + "% من الوزن)، ثم يبطؤ.";
+  t += "\nتقدير يخطئ نحو ±10%. أعدّل بعد 2 إلى 3 أسابيع حسب متوسط وزني.";
+  return t;
+}
+
+function shareText(title, txt, okMsg){
+  if(typeof navigator.share === "function"){
+    navigator.share({title:title, text:txt}).catch(function(e){ if(e && e.name !== "AbortError") copyText(txt, okMsg); });
+  }else copyText(txt, okMsg);
+}
+
+function calSeg(act, cur, items, cls){
+  return '<div class="seg ' + (cls || "") + '" role="group">' + items.map(function(i){
+    var on_ = String(cur) === String(i[0]);
+    return '<button type="button" class="' + (on_ ? "on" : "") + '" data-act="' + act + '" data-v="' + i[0] + '" aria-pressed="' + on_ + '">' + i[1] + '</button>';
+  }).join("") + '</div>';
+}
+
+function calOutHTML(){
+  if(S.cal && S.cal.pg) return '<div class="warn">الحمل والرضاعة لهما احتياجات خاصة، ولا تناسبهما حاسبة عامة. اسألي طبيبتك أو اختصاصية التغذية عن سعراتك.</div>';
+  var c = calOf(), R = calcPlan(c);
+  if(!R.ok) return '<p class="xs muted">' + gz("أكملي", "أكمل") + ' الحقول التالية لتظهر خطتك: ' + R.miss.join("، ") + '.</p>';
+  var g = c.sex === "m";
+  var lab = {lose:"هدفك اليومي لإنزال الدهون", keep:"سعراتك اليومية للثبات", gain:"هدفك اليومي لزيادة العضل"}[R.goal];
+  var sub = "";
+  if(R.goal === "lose") sub = "عجز نحو " + fmtN(-R.diff) + " سعرة (" + Math.round(R.defPct) + "% من احتياجك). المتوقع في البداية نحو " + (Math.round(R.kgWk * 100) / 100) + " كجم أسبوعياً (" + (Math.round(R.pctBw * 100) / 100) + "% من وزنك).";
+  else if(R.goal === "gain") sub = "زيادة نحو " + fmtN(R.diff) + " سعرة (" + Math.round(R.defPct) + "%). المتوقع نحو " + (Math.round(R.kgWk * 100) / 100) + " كجم أسبوعياً إن لم يذهب بعضها دهوناً.";
+  else sub = "هذا تقدير لما يحافظ على وزنك الحالي.";
+  var h = '<div class="pres' + (R.flags.indexOf("floor") >= 0 || R.flags.indexOf("belowbmr") >= 0 ? " info" : "") + '" role="status"><div class="xs muted">' + lab + '</div><div class="big num">' + fmtN(R.target) + '<small> سعرة</small></div><p>' + sub + '</p></div>';
+  h += '<div class="tiles3"><div><div class="v num">' + fmtN(R.bmr) + '</div><div class="l">حرق أساسي</div></div><div><div class="v num">' + fmtN(R.tdee) + '</div><div class="l">احتياج الثبات</div></div><div><div class="v num"><bdi dir="ltr">' + (R.diff > 0 ? "+" : (R.diff < 0 ? "\u2212" : "")) + fmtN(Math.abs(R.diff)) + '</bdi></div><div class="l">الفرق</div></div></div>';
+  h += '<div class="tbw"><table class="tb"><thead><tr><th>العنصر</th><th>جرام</th><th>سعرة</th><th>من طاقتك</th></tr></thead><tbody>' +
+    '<tr><td>بروتين<div class="xs muted num">مدى ' + R.Plo + '–' + R.Phi + '</div></td><td class="num b">' + R.P + '</td><td class="num">' + fmtN(4 * R.P) + '</td><td class="num">' + Math.round(400 * R.P / R.tot) + '%</td></tr>' +
+    '<tr><td>كارب</td><td class="num b">' + R.C + '</td><td class="num">' + fmtN(4 * R.C) + '</td><td class="num">' + Math.round(400 * R.C / R.tot) + '%</td></tr>' +
+    '<tr><td>دهون</td><td class="num b">' + R.F + '</td><td class="num">' + fmtN(9 * R.F) + '</td><td class="num">' + Math.round(900 * R.F / R.tot) + '%</td></tr></tbody></table></div>';
+  h += '<div class="lbl2">توزيعها على الوجبات</div>' + calSeg("cmeals", c.meals, [[3, "3 وجبات"], [4, "4 وجبات"], [5, "5 وجبات"]], "s3");
+  h += '<div class="tbw"><table class="tb"><thead><tr><th>الوجبة</th><th>سعرة</th><th>بروتين</th><th>كارب</th><th>دهون</th></tr></thead><tbody>' +
+    R.meals.map(function(m){ return '<tr><td>' + m.n + '</td><td class="num b">' + fmtN(m.kc) + '</td><td class="num">' + m.p + '</td><td class="num">' + m.c + '</td><td class="num">' + m.f + '</td></tr>'; }).join("") + '</tbody></table></div>';
+  h += '<p class="xs muted">الأرقام بالجرام ما عدا السعرات. التوزيع تقريبي، والأهم مجموع اليوم لا تطابق كل وجبة.</p>';
+  var notes = R.flags.map(function(f){ return calFlagText(R, f); }).filter(Boolean);
+  if(R.weeks) notes.push("للوصول إلى " + fmtKg(R.tw) + " كجم: نحو " + R.weeks + " أسبوعاً لو بقي المعدل ثابتاً. الواقع يبطؤ مع الوقت، فاعتبرها أقل مدة ممكنة.");
+  if(R.goal === "lose" && R.sex === "f") notes.push("إن تأخرت الدورة أو " + gz("شعرتِ", "شعرتَ") + " بدوار أو برد دائم أو تساقط شعر فارفعي السعرات وراجعي طبيبتك.");
+  if(notes.length) h += '<ul class="lst">' + notes.map(function(n){ return '<li>' + n + '</li>'; }).join("") + '</ul>';
+  h += '<div class="row wrap" style="gap:10px"><button class="btn" style="flex:1 1 150px" data-act="ccopy">نسخ النتيجة</button>' +
+    (typeof navigator.share === "function" ? '<button class="btn quiet" style="flex:1 1 150px" data-act="cshare">حفظ في الملاحظات</button>' : '') + '</div>';
+  h += '<p class="xs muted">' + (typeof navigator.share === "function" ? '«حفظ في الملاحظات» يفتح قائمة المشاركة في جوالك، ' + gz("واختاري", "واختر") + ' منها «الملاحظات». أو ' + gz("انسخي", "انسخ") + ' النتيجة و' + gz("الصقيها", "الصقها") + ' هناك.' : gz("انسخي", "انسخ") + ' النتيجة و' + gz("الصقيها", "الصقها") + ' في تطبيق الملاحظات.') + '</p>';
+  var adj = {
+    lose:["نزل وزنك أقل من نصف المتوقع: " + gz("انقصي", "انقص") + " 100 إلى 150 سعرة أو " + gz("زيدي", "زد") + " المشي.", "نزل أكثر من 1% من وزنك أسبوعياً: " + gz("زيدي", "زد") + " 100 إلى 200 سعرة، فالسرعة الزائدة تضرّ العضل."],
+    keep:["زاد وزنك باطراد: " + gz("انقصي", "انقص") + " 100 إلى 150 سعرة.", "نزل وزنك باطراد: " + gz("زيدي", "زد") + " 100 إلى 150 سعرة.", "ثبت وزنك: الرقم صحيح."],
+    gain:["لم يزد وزنك خلال 2 إلى 3 أسابيع: " + gz("زيدي", "زد") + " 100 إلى 150 سعرة.", "زاد أكثر من 0.5% أسبوعياً: غالباً يذهب بعضه دهوناً، " + gz("انقصي", "انقص") + " 100 إلى 150 سعرة."]
+  }[R.goal];
+  h += '<details class="how"><summary>كيف أعدّل الرقم بعد بدء الالتزام؟' + ico("chev") + '</summary><div class="in"><p class="sm">هذه نقطة بداية وليست حكماً. أي معادلة تخطئ نحو ±10% لدى الفرد الواحد. ' + gz("التزمي", "التزم") + ' 2 إلى 3 أسابيع، و' + gz("زني", "زن") + ' نفسك بنفس الشروط (صباحاً بعد الحمام) عدة مرات أسبوعياً، و' + gz("قارني", "قارن") + ' متوسط الأسبوع بالذي قبله. ثم عدّل بحسب ما يلي (تقديرات مني لا من دراسة):</p>' +
+    '<ul class="lst">' + adj.map(function(x){ return '<li>' + x + '</li>'; }).join("") + '</ul></div></details>';
+  return h;
+}
+
+function calCardHTML(){
+  var c = calOf(), cc = S.cal || {};
+  var body = '<div class="fld"><span class="lbl">الجنس</span>' + calSeg("csex", c.sex, [["f", "أنثى"], ["m", "ذكر"]], "") + '</div>' +
+    '<div class="cgrid">' +
+    '<div class="fld"><label for="cage">العمر (سنة)</label><input class="inp num" id="cage" type="number" inputmode="numeric" min="18" max="80" placeholder="مثلاً 28" value="' + (S.age ? esc(S.age) : "") + '" data-act="age"></div>' +
+    '<div class="fld"><label for="ch">الطول (سم)</label><input class="inp num" id="ch" type="number" inputmode="numeric" min="130" max="220" placeholder="مثلاً 165" value="' + (cc.h ? esc(cc.h) : "") + '" data-act="ch"></div>' +
+    '<div class="fld"><label for="cwt">الوزن (كجم)</label><input class="inp num" id="cwt" type="number" inputmode="decimal" min="35" max="250" placeholder="مثلاً 65" value="' + (S.wt ? esc(S.wt) : "") + '" data-act="wt"></div>' +
+    '<div class="fld"><label for="cbf">نسبة الدهون % <span class="xs muted">(اختياري)</span></label><input class="inp num" id="cbf" type="number" inputmode="decimal" min="5" max="60" placeholder="إن عرفتها" value="' + (cc.bf ? esc(cc.bf) : "") + '" data-act="cbf"></div></div>' +
+    '<div class="fld"><span class="lbl">مستوى نشاطك اليومي</span><div class="opts">' + CAL_ACT.map(function(a){
+      var on_ = c.act === a.id;
+      return '<button type="button" class="opt' + (on_ ? " on" : "") + '" data-act="cact" data-v="' + a.id + '" aria-pressed="' + on_ + '"><span class="b">' + a.n + '</span><span class="xs muted">' + a.d + '</span></button>';
+    }).join("") + '</div></div>' +
+    '<div class="fld"><span class="lbl">هدفك</span>' + calSeg("cgoal", c.goal, CAL_GOALS, "s3") + '</div>';
+  if(c.goal === "lose" || c.goal === "gain"){
+    body += '<div class="fld"><span class="lbl">الوتيرة</span>' + calSeg("cpace", c.pace, CAL_PACES[c.goal], c.goal === "lose" ? "s3" : "") +
+      '<p class="xs muted">' + (c.goal === "lose" ? "الوتيرة نسبة من وزنك أسبوعياً: هادئ 0.25% ومتوسط 0.5% وأسرع 0.75%. هذا بدل خصم 500 ثابتاً للجميع، فالخصم الواحد كبير على الأخفّ وزناً. وللمقارنة، مراجعة لنزول الدهون عند الرياضيين توصي بنحو 0.5 إلى 1% أسبوعياً." : "الزيادة نسبة من احتياجك: هادئ 5% ومتوسط 10%. الزيادة الأكبر تذهب غالباً دهوناً لا عضلاً.") + '</p></div>';
+  }
+  if(c.goal === "lose") body += '<div class="fld"><label for="ctw">' + gz("الوزن الذي تريدين الوصول إليه", "الوزن الذي تريد الوصول إليه") + ' (كجم) <span class="xs muted">(اختياري)</span></label><input class="inp num" id="ctw" type="number" inputmode="decimal" min="35" max="250" placeholder="مثلاً 58" value="' + (cc.tw ? esc(cc.tw) : "") + '" data-act="ctw"></div>';
+  body += '<div class="group">' + chkBtn("cpg", !!(S.cal && S.cal.pg), "أنا حامل أو مرضعة", "تظهر لك رسالة بدل الأرقام", "") + '</div>' +
+    '<div id="cout" class="col">' + calOutHTML() + '</div>' +
+    '<div class="warn">للبالغين الأصحاء من 18 سنة فأكثر. لا تناسب الحمل والرضاعة ولا من لديه سكري أو مرض كلوي أو قلبي أو تاريخ اضطراب أكل. هذه تقديرات عامة لا تغني عن طبيب أو اختصاصي تغذية.</div>' +
+    '<div class="tfoot"><span class="xs muted">قوة الدليل · اضغطي لترين المصدر</span><div class="row wrap" style="gap:8px">' + evChip("energy", "السعرات: ") + evChip("protein", "البروتين: ") + evChip("macros", "التوزيع: ") + '</div></div>';
+  return '<section class="card col tool" id="t-cal"><div class="th"><span class="si">' + ico("flame") + '</span><div class="grow"><h2 class="h3">السعرات والماكروز</h2><div class="tsub">' + gz("اختاري هدفك فتعرفي", "اختر هدفك فتعرف") + ' كم تأكل' + gz("ين", "") + ' من السعرات والبروتين والكارب والدهون</div></div></div>' + body + '</section>';
+}
+function calRepaint(){ var el = document.getElementById("t-cal"); if(el) el.outerHTML = calCardHTML(); }
+function calPaintOut(){ var o = document.getElementById("cout"); if(o) o.innerHTML = calOutHTML(); }
+
+/* ============ تذكير الأدوية ============ */
+function medData(){
+  if(!S.med || typeof S.med !== "object") S.med = {list:[], taken:{}};
+  if(!Array.isArray(S.med.list)) S.med.list = [];
+  if(!S.med.taken || typeof S.med.taken !== "object") S.med.taken = {};
+  return S.med;
+}
+function medOn(m, dk){
+  if(!m || m.x) return false;
+  if(m.s && dk < m.s) return false;
+  if(m.days > 0 && m.s){ var e = dparse(m.s); e.setDate(e.getDate() + m.days - 1); if(dk > dkey(e)) return false; }
+  return true;
+}
+function medDoses(dk){
+  var out = [];
+  medData().list.forEach(function(m){
+    if(!medOn(m, dk)) return;
+    (m.t || []).forEach(function(t){ out.push({k:m.id + "@" + t, id:m.id, n:m.n, d:m.d || "", t:t}); });
+  });
+  out.sort(function(a, b){ return a.t < b.t ? -1 : (a.t > b.t ? 1 : 0); });
+  return out;
+}
+function medTaken(dk, k){ var t = medData().taken[dk], e = t && t[k]; return !!(e && e.v); }
+function medAdh(){
+  var tot = 0, got = 0, i, d;
+  for(i = 0; i < 7; i++){ d = new Date(); d.setDate(d.getDate() - i); var dk = dkey(d); medDoses(dk).forEach(function(x){ tot++; if(medTaken(dk, x.k)) got++; }); }
+  return {tot:tot, got:got};
+}
+function medNewForm(){ return {id:null, n:"", d:"", t:["08:00"], days:""}; }
+function medFormHTML(){
+  var f = UI.mf;
+  return '<div class="medform col"><div class="lbl">' + (f.id ? "تعديل الدواء" : "دواء جديد") + '</div>' +
+    '<div class="fld"><label for="mname">اسم الدواء</label><input class="inp" id="mname" type="text" maxlength="40" placeholder="كما هو على العلبة" value="' + esc(f.n) + '" data-act="mname"></div>' +
+    '<div class="fld"><label for="mnote">ملاحظة <span class="xs muted">(اختياري)</span></label><input class="inp" id="mnote" type="text" maxlength="60" placeholder="مثلاً: بعد الأكل" value="' + esc(f.d) + '" data-act="mnote"></div>' +
+    '<div class="fld"><span class="lbl">أوقات التذكير يومياً</span>' + f.t.map(function(t, i){
+      return '<div class="row" style="gap:8px"><input class="inp num grow" type="time" step="60" value="' + esc(t) + '" data-act="mtime" data-i="' + i + '" aria-label="الوقت ' + (i + 1) + '" style="direction:ltr;text-align:center">' +
+        (f.t.length > 1 ? '<button type="button" class="ibtn" data-act="mtdel" data-i="' + i + '" aria-label="حذف الوقت ' + (i + 1) + '">حذف</button>' : '') + '</div>';
+    }).join("") + (f.t.length < 6 ? '<button type="button" class="btn s quiet" data-act="mtadd">+ وقت آخر</button>' : '') + '</div>' +
+    '<div class="fld"><label for="mdays">لمدة كم يوماً؟ <span class="xs muted">(' + gz("اتركيه", "اتركه") + ' فارغاً إن كان مستمراً)</span></label><input class="inp num" id="mdays" type="number" inputmode="numeric" min="1" max="365" placeholder="مثلاً 7" value="' + esc(f.days) + '" data-act="mdays"></div>' +
+    '<div class="row wrap" style="gap:10px"><button type="button" class="btn" style="flex:1 1 130px" data-act="msave">حفظ</button><button type="button" class="btn quiet" style="flex:1 1 110px" data-act="mcancel">إلغاء</button></div></div>';
+}
+function medCardHTML(){
+  var dk = dkey(), doses = medDoses(dk), now = new Date(), hm = pad2(now.getHours()) + ":" + pad2(now.getMinutes());
+  var live = medData().list.filter(function(m){ return !m.x; });
+  var body = '<div class="warn">الجرعات ومواعيدها يحدّدها طبيبك أو الصيدلي. هذه أداة تذكير فقط، ' + gz("اكتبي", "اكتب") + ' فيها ما وُصف لك و' + gz("لا تغيّريه", "لا تغيّره") + ' بناءً عليها.</div>';
+  if(live.length){
+    body += '<div class="lbl">جرعات اليوم</div>';
+    if(doses.length){
+      body += '<div class="group">' + doses.map(function(x){
+        var tk = medTaken(dk, x.k), late = !tk && x.t < hm;
+        return '<button type="button" class="chk' + (late ? " late" : "") + '" data-act="mtake" data-k="' + esc(x.k) + '" aria-pressed="' + tk + '"><span class="ck' + (tk ? " on" : "") + '">' + ico("check") + '</span><span class="grow"><span class="b" style="display:block">' + esc(x.n) + '</span><span class="xs muted" style="display:block">' + (x.d ? esc(x.d) + " · " : "") + (tk ? "تم أخذها" : (late ? "فات موعدها، " + gz("اضغطي إن أخذتِها", "اضغط إن أخذتَها") : "قادمة")) + '</span></span><span class="mtm num">' + x.t + '</span></button>';
+      }).join("") + '</div>';
+      var a = medAdh();
+      if(a.tot) body += '<p class="xs muted num">آخر 7 أيام: ' + a.got + ' من ' + a.tot + ' جرعة.</p>';
+    }else body += '<p class="xs muted">لا جرعات اليوم، فأدويتك المضافة خارج مدّتها.</p>';
+    body += '<div class="lbl">أدويتي</div><div class="group">' + live.map(function(m){
+      var cf = UI.mdel === m.id;
+      return '<div class="hrow"><div class="grow"><div class="b">' + esc(m.n) + '</div><div class="xs muted num">' + (m.t || []).join(" · ") + (m.days > 0 ? " · " + m.days + " يوماً" : " · مستمر") + '</div></div>' +
+        '<button type="button" class="ibtn" data-act="medit" data-id="' + esc(m.id) + '">تعديل</button><button type="button" class="ibtn" data-act="mdel" data-id="' + esc(m.id) + '">' + (cf ? "تأكيد الحذف" : "حذف") + '</button></div>';
+    }).join("") + '</div>';
+  }else if(!UI.mf){
+    body += '<p class="sm muted">لم تُضف أي دواء بعد. ' + gz("أضيفي", "أضف") + ' اسم الدواء ومواعيده، وسيظهر لك كل يوم ل' + gz("تعلّمي ما أخذتِ", "تعلّم ما أخذتَ") + '.</p>';
+  }
+  body += UI.mf ? medFormHTML() : '<button type="button" class="btn quiet full" data-act="madd">' + (live.length ? "+ إضافة دواء آخر" : "+ إضافة دواء") + '</button>';
+  if(live.length){
+    if(icsOk()){
+      body += '<div class="group"><div class="gi" style="display:block"><div class="t">تنبيهات في تقويم الجوال</div><div class="m">ينزّل ملف تقويم فيه تنبيه يومي لكل موعد. ' + gz("افتحيه", "افتحه") + ' من التنزيلات و' + gz("اضغطي", "اضغط") + ' «إضافة الكل»، فينبّهك الجوال في الوقت حتى والموقع مغلق.</div></div></div>' +
+        '<button type="button" class="btn full" data-act="mics">تنزيل ملف التنبيهات</button>' +
+        '<p class="xs muted">وأثناء فتح هذه الصفحة أنبّهك بنفسي برسالة وصوت عند موعد الدواء، لكن الموقع لا يستطيع التنبيه وهو مغلق، ولذلك أنصح بتقويم الجوال.</p>';
+    }else{
+      body += '<p class="xs muted">أنبّهك برسالة وصوت عند موعد الدواء ما دامت هذه الصفحة مفتوحة. تنزيل ملف تنبيهات التقويم يعمل في الموقع حين يُفتح مباشرة من سفاري، لا من داخل هذا العرض.</p>';
+    }
+  }
+  body += '<div class="tfoot"><span class="xs muted">قوة الدليل · اضغطي لترين المصدر</span>' + evChip("meds") + '</div>';
+  return '<section class="card col tool" id="t-med"><div class="th"><span class="si">' + ico("pill") + '</span><div class="grow"><h2 class="h3">تذكير الأدوية</h2><div class="tsub">مواعيد دوائك وتعليم ما ' + gz("أخذتِ", "أخذتَ") + ' كل يوم</div></div></div>' + body + '</section>';
+}
+function medRepaint(){ var el = document.getElementById("t-med"); if(el) el.outerHTML = medCardHTML(); }
+function medPrune(){
+  var t = medData().taken, lim = new Date(); lim.setDate(lim.getDate() - 60); var lk = dkey(lim);
+  Object.keys(t).forEach(function(d){ if(d < lk) delete t[d]; });
+}
+function medSave(){
+  var f = UI.mf, n = (f.n || "").trim(), ts = [];
+  f.t.forEach(function(t){ if(/^\d{2}:\d{2}$/.test(t) && ts.indexOf(t) < 0) ts.push(t); });
+  ts.sort();
+  if(!n){ toast(gz("اكتبي", "اكتب") + " اسم الدواء"); return false; }
+  if(!ts.length){ toast(gz("اختاري", "اختر") + " وقتاً واحداً على الأقل"); return false; }
+  var days = parseInt(f.days, 10); if(!(days >= 1 && days <= 365)) days = 0;
+  var D = medData(), m = null;
+  if(f.id){ D.list.forEach(function(x){ if(x.id === f.id) m = x; }); }
+  if(!m){ m = {id:"m" + Date.now().toString(36) + Math.floor(Math.random() * 1296).toString(36), s:dkey()}; D.list.push(m); }
+  m.n = n; m.d = (f.d || "").trim(); m.t = ts; m.days = days; m.u = Date.now(); delete m.x;
+  if(f.id && days > 0 && !m.s) m.s = dkey();
+  medPrune(); save(); return true;
+}
+
+/* ملف تقويم (iCalendar): حدث يومي لكل موعد وتنبيه عند الوقت. التوقيت عائم فيتبع ساعة الجوال */
+function icsEsc(s){ return String(s).replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\r?\n/g, "\\n"); }
+function icsFold(line){
+  var out = [], cur = "", n = 0, lim = 73;
+  Array.from(line).forEach(function(ch){
+    var cp = ch.codePointAt(0), b = cp < 0x80 ? 1 : (cp < 0x800 ? 2 : (cp < 0x10000 ? 3 : 4));
+    if(n + b > lim){ out.push(cur); cur = " "; n = 1; lim = 73; }
+    cur += ch; n += b;
+  });
+  out.push(cur);
+  return out.join("\r\n");
+}
+function icsStamp(d, z){ return d.getFullYear() + pad2(d.getMonth() + 1) + pad2(d.getDate()) + "T" + pad2(d.getHours()) + pad2(d.getMinutes()) + "00"; }
+function medICS(){
+  var live = medData().list.filter(function(m){ return !m.x && (m.t || []).length; });
+  if(!live.length) return "";
+  var now = new Date(), stamp = now.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+  var L = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//ashwaq-fitness//meds//AR", "CALSCALE:GREGORIAN"];
+  live.forEach(function(m){
+    var s = m.s || dkey();
+    m.t.forEach(function(t){
+      var st = dparse(s); st.setHours(+t.slice(0, 2), +t.slice(3), 0, 0);
+      var en = new Date(st.getTime() + 15 * 60000);
+      L.push("BEGIN:VEVENT", "UID:" + m.id + "-" + t.replace(":", "") + "@ashwaq-fitness", "DTSTAMP:" + stamp, "DTSTART:" + icsStamp(st), "DTEND:" + icsStamp(en),
+        "RRULE:FREQ=DAILY" + (m.days > 0 ? ";COUNT=" + m.days : ""), "SUMMARY:" + icsEsc("دواء: " + m.n),
+        "DESCRIPTION:" + icsEsc((m.d ? m.d + ". " : "") + "تذكير من لياقة أشواق"), "TRANSP:TRANSPARENT",
+        "BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsEsc("موعد دواء: " + m.n), "TRIGGER:PT0M", "END:VALARM", "END:VEVENT");
+    });
+  });
+  L.push("END:VCALENDAR");
+  return L.map(icsFold).join("\r\n") + "\r\n";
+}
+function icsOk(){ try{ return !(window.claude && typeof window.claude.use === "function"); }catch(e){ return true; } }
+function medDownload(){
+  if(!icsOk()){ toast("التنزيل غير متاح في هذا العرض"); return; }
+  var ics = medICS();
+  if(!ics){ toast(gz("أضيفي", "أضف") + " دواءً أولاً"); return; }
+  try{
+    var blob = new Blob([ics], {type:"text/calendar;charset=utf-8"}), url = URL.createObjectURL(blob), a = document.createElement("a");
+    a.href = url; a.download = "medicine-reminders.ics"; document.body.appendChild(a); a.click();
+    setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); }, 4000);
+    toast("نُزّل الملف، " + gz("افتحيه", "افتحه") + " من التنزيلات", 4000);
+  }catch(e){ toast("تعذّر إنشاء الملف هنا. " + gz("افتحي", "افتح") + " الموقع من سفاري."); }
+}
+
+/* تنبيه داخل الصفحة وهي مفتوحة: رسالة وصوت خلال 20 دقيقة من الموعد، مرة واحدة لكل جرعة */
+var MEDAL = {};
+function medTick(){
+  try{
+    var dk = dkey(), now = new Date(), nm = now.getHours() * 60 + now.getMinutes(), due = [];
+    medDoses(dk).forEach(function(x){
+      var tm = +x.t.slice(0, 2) * 60 + +x.t.slice(3), key = dk + "|" + x.k;
+      if(!medTaken(dk, x.k) && nm >= tm && nm - tm <= 20 && !MEDAL[key]){ MEDAL[key] = 1; due.push(x); }
+    });
+    if(due.length){
+      toast("حان موعد دوائك: " + due.map(function(x){ return x.n; }).join("، "), 7000);
+      beep(660, 180); setTimeout(function(){ beep(880, 220); }, 260); buzz([120, 80, 120]);
+    }
+    if(UI.view === "tools" && !UI.mf && document.getElementById("t-med")) medRepaint();
+  }catch(e){}
+}
+function medStart(){
+  setInterval(medTick, 30000);
+  document.addEventListener("visibilitychange", function(){ if(document.visibilityState === "visible") medTick(); });
+  setTimeout(medTick, 1500);
+}
+
 /* ============ مكوّنات مشتركة ============ */
 function evBlock(k){
   var e = EVID[k];
@@ -2293,8 +2697,7 @@ function logPulse(){
     '<div class="fld"><label for="pbpm">نبضات القلب في الدقيقة</label><div class="row" style="gap:10px"><input class="inp num bigin" id="pbpm" type="number" inputmode="numeric" min="30" max="200" placeholder="مثلاً 72" value="' + esc(pre) + '" data-act="pbpm" style="flex:1;min-width:0"><button class="btn quiet" data-act="pcount">' + ico("heart") + 'عدّيني</button></div>' +
     '<span class="xs muted">لا تعرفين كيف تعدّين؟ اضغطي «عدّيني» وسأحسب لك.</span></div>' +
     '<div id="plive">' + (pre !== "" && +pre >= 30 ? bandHTML(+pre) : "") + '</div>' +
-    '<div class="fld"><label for="psleep">ساعات نومك الليلة الماضية (اختياري)</label><input class="inp num" id="psleep" type="number" inputmode="decimal" step="0.5" min="0" max="16" placeholder="مثلاً 7" value="' + (cur && cur.s != null ? cur.s : "") + '" data-act="psleep"><span class="xs muted" id="pslnote">' + (cur && cur.s ? sleepNote(cur.s) : "") + '</span></div>' +
-    '<div class="group">' + chkBtn("pflag", !!(cur && cur.f), "يوم غير معتاد", "مرض أو توتر أو قهوة قبل القياس أو قلة نوم. لا يدخل في المتوسط والمقارنة.", 'id="pflag"') + '</div>' +
+    '<div class="group">' + chkBtn("pflag", !!(cur && cur.f), "يوم غير معتاد", "مرض أو توتر أو قهوة قبل القياس أو سهر. لا يدخل في المتوسط والمقارنة.", 'id="pflag"') + '</div>' +
     '<button class="btn full" data-act="psave">احفظي القراءة</button></section>';
 
   if(rows.length){
@@ -2306,13 +2709,12 @@ function logPulse(){
       pulseChart(rows) +
       (rows.length > 1 ? '<p class="xs muted">المظلّل هو النطاق الطبيعي (60 إلى 100). النقاط المفرغة أيام علّمتِها «غير معتادة».</p>' : '<p class="xs muted">سجّلي قراءة ثانية ليظهر الرسم.</p>') +
       '<p class="sm">' + trendText(t) + '</p>' +
-      (t.sleep7 != null ? '<p class="xs muted num">متوسط نومك في آخر قراءاتك: ' + t.sleep7 + ' ساعة. ' + (t.sleep7 >= 7 ? "ضمن الموصى به." : "أقل من 7 ساعات الموصى بها للبالغين بانتظام.") + '</p>' : '') +
       '<div class="chips">' + evChip("trend", "كيف تُحسب؟ ") + evChip("rhrex", "هل ينزل بالتمرين؟ ") + '</div></section>';
 
     var all = rows.slice().reverse(), shown = UI.hall ? all : all.slice(0, 7);
     h += sech("list", "قراءاتي", "اضغطي «تعديل» لتغيير قراءة") +
       '<div class="group">' + shown.map(function(r){
-        return '<div class="hrow"><div class="grow"><div class="b">' + dfmt(r.k) + '</div><div class="xs muted">' + pulseBand(r.p).t + (r.s != null ? " · نوم " + r.s + " س" : "") + (r.f ? " · غير معتاد" : "") + '</div></div><div class="hv num">' + r.p + '</div>' +
+        return '<div class="hrow"><div class="grow"><div class="b">' + dfmt(r.k) + '</div><div class="xs muted">' + pulseBand(r.p).t + (r.f ? " · غير معتاد" : "") + '</div></div><div class="hv num">' + r.p + '</div>' +
           '<button class="ibtn" data-act="pedit" data-k="' + r.k + '">تعديل</button><button class="ibtn" data-act="pdel" data-k="' + r.k + '" aria-label="حذف قراءة ' + dfmt(r.k) + '">حذف</button></div>';
       }).join("") + '</div>' +
       (all.length > 7 ? '<button class="btn quiet full mt" data-act="pall">' + (UI.hall ? "عرض آخر 7 فقط" : "عرض كل القراءات (" + all.length + ")") + '</button>' : '');
@@ -2348,23 +2750,20 @@ function tcard(id, icon, title, sub, evk, body){
     (evk ? '<div class="tfoot"><span class="xs muted">قوة الدليل · اضغطي لترين المصدر</span>' + evChip(evk) + '</div>' : '') + '</section>';
 }
 function renderTools(){
-  var h = phead("calc", "أدواتي", "حاسبات صغيرة مبنية على مصادر. كل بطاقة تذكر قوة دليلها، واضغطي على الشارة لترين المصدر.");
-  h += tiles("tjump", "", [["t-heart", "عدّاد النبض", "heart"], ["t-zones", "مناطق النبض", "clock"], ["t-protein", "البروتين", "leaf"], ["t-talk", "شدة الجهد", "sun"], ["t-sleep", "النوم", "moon"]], "data-id");
+  var h = phead("calc", "أدواتي", "عدّاد النبض وحاسبة السعرات وتذكير الأدوية وغيرها. كل بطاقة تذكر قوة دليلها، واضغطي على الشارة لترين المصدر.");
+  h += tiles("tjump", "", [["t-heart", "عدّاد النبض", "heart"], ["t-cal", "السعرات", "flame"], ["t-med", "الأدوية", "pill"], ["t-zones", "مناطق النبض", "clock"], ["t-talk", "شدة الجهد", "sun"]], "data-id");
   h += '<div class="col">';
   h += tcard("t-heart", "heart", "عدّاد النبض", "عدّي نبضك بالضغط مع كل نبضة", "rhr",
     '<p class="sm">تعدّين نبضك 30 ثانية بالضغط مع كل نبضة، ويضرب الموقع الرقم في 2 ويفسّره لك. الطريقة نفسها التي يذكرها المرجع الطبي (30 ثانية × 2).</p>' +
     '<div class="row wrap" style="gap:10px"><button class="btn" style="flex:1 1 140px" data-act="pcount">ابدئي العدّ</button><button class="btn quiet" style="flex:1 1 120px" data-act="topulse">سجلّ النبض</button></div>');
+  h += calCardHTML();
+  h += medCardHTML();
   h += tcard("t-zones", "clock", "مناطق نبض التمرين", "نبضك الأقصى ومناطق الجهد حسب عمرك", "zones",
     '<div class="fld"><label for="age">عمرك بالسنوات</label><input class="inp num" id="age" type="number" inputmode="numeric" min="18" max="80" placeholder="مثلاً 28" value="' + (S.age ? esc(S.age) : "") + '" data-act="age"></div><div id="zout" class="col">' + zonesHTML(+S.age) + '</div>');
-  h += tcard("t-protein", "leaf", "احتياجك من البروتين", "مدى يومي تقريبي حسب وزنك", "protein",
-    '<div class="fld"><label for="wt">وزنك بالكيلوجرام</label><input class="inp num" id="wt" type="number" inputmode="decimal" min="30" max="200" placeholder="مثلاً 60" value="' + (S.wt ? esc(S.wt) : "") + '" data-act="wt"></div><div id="pout" class="col">' + proteinHTML(+S.wt) + '</div>');
   h += tcard("t-talk", "sun", "كيف أعرف شدة جهدي؟", "اختبار الكلام بلا أي جهاز", "talk",
     '<ul class="lst"><li><b>خفيف:</b> تتكلمين وتغنين بسهولة.</li><li><b>متوسط:</b> تتكلمين لكن لا تقدرين على الغناء. هذا هدفك في معظم الحرق.</li><li><b>شديد:</b> كلمات قليلة قبل أن تلتقطي نفَسك.</li></ul>' +
     '<p class="xs muted">اختبار الكلام يغنيك عن أي جهاز، ويناسب كل الأعمار واللياقات.</p>');
-  h += tcard("t-sleep", "moon", "النوم والتعافي", "ساعات نومك وأثرها على تعافيك", "sleep",
-    '<p class="sm">يُنصح البالغون بـ <b>7 ساعات نوم فأكثر</b> بانتظام. اكتبي ساعات نومك مع نبض الصباح لتري متوسطها بجانب اتجاه نبضك.</p>' +
-    '<button class="btn quiet full" data-act="topulse">سجّلي نومي مع النبض</button>');
-  h += '</div><div class="warn mt">الأرقام هنا تقديرات عامة لا تشخّص حالتك. مع أي دواء للقلب أو الضغط أو حالة صحية اسألي طبيبتك عن النبض المناسب لك.</div>';
+  h += '</div><div class="warn mt">الأرقام هنا تقديرات عامة لا تشخّص حالتك. مع أي دواء للقلب أو الضغط أو حالة صحية اسألي طبيبك عن النبض المناسب لك.</div>';
   return h;
 }
 
@@ -2423,7 +2822,8 @@ var EVGROUPS = [
   ["dumb", "الحركة والقوة", ["who", "talk", "acsm", "lowload", "circuit"]],
   ["ref", "الاستقامة", ["neck", "sh", "kyph", "hip", "glute", "core", "wall"]],
   ["heart", "القلب والنبض", ["lowimp", "rhr", "rhrex", "zones", "trend"]],
-  ["leaf", "الصحة اليومية", ["sleep", "protein", "cycle"]]
+  ["flame", "التغذية والأدوية", ["energy", "protein", "macros", "meds"]],
+  ["leaf", "الصحة اليومية", ["sleep", "cycle"]]
 ];
 function refEvid(){
   var cnt = {strong:0, mid:0, low:0, logic:0}, tot = 0;
@@ -2460,8 +2860,8 @@ function refDay(){
     '<p>اقتراح عملي مني بلا دراسة مباشرة: إن نمتِ قليلاً وشعرتِ بثقل، فخففي الوزن درجة أو أنهي بجولة أقل بدل أن تتركي الجلسة.</p>');
   h += acc("البروتين والأكل",
     '<div class="row sp wrap"><span class="b">كم أحتاج؟</span>' + evChip("protein") + '</div>' +
-    '<p>تتوقف الفائدة الإضافية في بناء العضلات عند نحو 1.6 جم لكل كجم يومياً بحسب تحليل تجميعي، وأقل رقم شائع للبالغين 0.8 جم/كجم. ستجدين مدى يخصّك بوزنك في «أدواتي».</p>' +
-    '<button class="btn quiet full" data-act="go" data-v="tools">افتحي الحاسبة</button>');
+    '<p>تتوقف الفائدة الإضافية في بناء العضلات عند نحو 1.6 جم لكل كجم يومياً بحسب تحليل تجميعي، وأقل رقم شائع للبالغين 0.8 جم/كجم. حاسبة «السعرات» في «أدواتي» تعطيك رقمك بوزنك وهدفك، وتوزّعه على وجباتك.</p>' +
+    '<button class="btn quiet full" data-act="go" data-v="tools">افتحي حاسبة السعرات</button>');
   h += acc("الدورة الشهرية والتمرين",
     '<div class="row sp wrap"><span class="b">هل أغيّر برنامجي؟</span>' + evChip("cycle") + '</div>' +
     '<p>الأدلة ضعيفة وتشير إلى فرق ضئيل جداً في الأداء بين أطوار الدورة، ولا تكفي لتعميم تعديل واحد على الجميع. الأنسب أن تتبعي ما تشعرين به أنتِ.</p>' +
@@ -2674,7 +3074,7 @@ document.addEventListener("click", function(ev){
       break;
     case "wipe":
       if(!UI.wipe){ UI.wipe = true; openSheet(settingsHTML()); }
-      else { var keep = {pal:S.pal, theme:S.theme, sound:S.sound, qi:S.qi, qbag:S.qbag, synced:S.synced}; S = freshState(); for(var kq in keep){ S[kq] = keep[kq]; } UI.wipe = false; UI.open = {}; save(); closeSheet(); goView("home"); toast("بدأتِ من جديد"); }
+      else { var keep = {pal:S.pal, theme:S.theme, sound:S.sound, qi:S.qi, qbag:S.qbag, synced:S.synced, med:S.med}; S = freshState(); for(var kq in keep){ S[kq] = keep[kq]; } UI.wipe = false; UI.open = {}; save(); closeSheet(); goView("home"); toast("بدأتِ من جديد"); }
       break;
     case "lseg": UI.ls = ds.v; UI.hall = false; UI.view = "log"; render(); break;
     case "rseg": UI.rs = ds.v; render(); break;
@@ -2695,22 +3095,47 @@ document.addEventListener("click", function(ev){
       var pv = parseFloat(($("#pbpm") || {}).value), pd = ($("#pdate") || {}).value || dkey();
       if(!(pv >= 30 && pv <= 200)){ toast("اكتبي نبضاً بين 30 و200"); break; }
       if(pd > dkey()) pd = dkey();
-      var psv = parseFloat(($("#psleep") || {}).value), ent = {p:Math.round(pv), u:Date.now()};
-      if(psv > 0 && psv <= 16) ent.s = Math.round(psv * 2) / 2;
+      var ent = {p:Math.round(pv), u:Date.now()};
       if(($("#pflag") || t).getAttribute("aria-pressed") === "true") ent.f = 1;
       S.chk[pd] = ent; save(); render(); toast("حُفظت قراءة " + dfmt(pd));
       break;
     case "pedit":
       var ee = S.chk[ds.k]; if(!ee) break;
-      var sd = $("#pdate"), sb = $("#pbpm"), ss = $("#psleep"), sf = $("#pflag");
-      if(sd) sd.value = ds.k; if(sb) sb.value = ee.p; if(ss) ss.value = ee.s != null ? ee.s : "";
+      var sd = $("#pdate"), sb = $("#pbpm"), sf = $("#pflag");
+      if(sd) sd.value = ds.k; if(sb) sb.value = ee.p;
       if(sf){ sf.setAttribute("aria-pressed", String(!!ee.f)); var ck2 = sf.querySelector(".ck"); if(ck2) ck2.classList.toggle("on", !!ee.f); }
       var pl = $("#plive"); if(pl) pl.innerHTML = bandHTML(ee.p);
-      var sn = $("#pslnote"); if(sn) sn.textContent = ee.s ? sleepNote(ee.s) : "";
       if(sb && sb.scrollIntoView) sb.scrollIntoView({block:"center"});
       break;
     case "pdel": delete S.chk[ds.k]; save(); render(); toast("حُذفت القراءة"); break;
     case "pall": UI.hall = !UI.hall; render(); break;
+    case "csex": case "cact": case "cgoal": case "cpace":
+      S.cal = S.cal || {}; S.cal[{csex:"sex", cact:"act", cgoal:"goal", cpace:"pace"}[a]] = ds.v;
+      if(S.cal.goal === "gain" && S.cal.pace === "fast") S.cal.pace = "mid";
+      save(); calRepaint(); break;
+    case "cmeals": S.cal = S.cal || {}; S.cal.meals = +ds.v; save(); calPaintOut(); break;
+    case "cpg": S.cal = S.cal || {}; S.cal.pg = S.cal.pg ? 0 : 1; save(); calRepaint(); break;
+    case "ccopy": copyText(calText(), "نُسخت الخطة. الصقيها في الملاحظات"); break;
+    case "cshare": shareText("خطة السعرات", calText(), "نُسخت الخطة. الصقيها في الملاحظات"); break;
+    case "madd": UI.mf = medNewForm(); UI.mdel = null; medRepaint(); var mn = document.getElementById("mname"); if(mn) mn.focus(); break;
+    case "medit":
+      medData().list.forEach(function(m){ if(m.id === ds.id) UI.mf = {id:m.id, n:m.n, d:m.d || "", t:(m.t || []).slice(), days:m.days > 0 ? String(m.days) : ""}; });
+      UI.mdel = null; medRepaint(); break;
+    case "mdel":
+      if(UI.mdel === ds.id){
+        medData().list.forEach(function(m){ if(m.id === ds.id){ m.x = 1; m.u = Date.now(); } });
+        UI.mdel = null; save(); medRepaint(); toast("حُذف الدواء");
+      }else{ UI.mdel = ds.id; medRepaint(); }
+      break;
+    case "mtake":
+      var mtd = dkey(), mtk = medData().taken; mtk[mtd] = mtk[mtd] || {};
+      mtk[mtd][ds.k] = {v:medTaken(mtd, ds.k) ? 0 : 1, u:Date.now()};
+      save(); medRepaint(); break;
+    case "msave": if(medSave()){ UI.mf = null; medRepaint(); toast("حُفظ الدواء"); } break;
+    case "mcancel": UI.mf = null; medRepaint(); break;
+    case "mtadd": if(UI.mf && UI.mf.t.length < 6){ UI.mf.t.push("20:00"); medRepaint(); } break;
+    case "mtdel": if(UI.mf && UI.mf.t.length > 1){ UI.mf.t.splice(+ds.i, 1); medRepaint(); } break;
+    case "mics": medDownload(); break;
     case "tpause":
       if(TM){ if(TM.paused){ TM.end = Date.now() + TM.rem; TM.paused = false; } else { TM.rem = Math.max(0, TM.end - Date.now()); TM.paused = true; } tmBuild(); }
       break;
@@ -2722,11 +3147,12 @@ document.addEventListener("click", function(ev){
 document.addEventListener("change", function(ev){
   var t = ev.target;
   if(t.getAttribute && t.getAttribute("data-act") === "pdate"){
-    var e0 = S.chk[t.value], sb0 = document.getElementById("pbpm"), ss0 = document.getElementById("psleep"), sf0 = document.getElementById("pflag"), pl0 = document.getElementById("plive"), sn0 = document.getElementById("pslnote");
-    if(sb0) sb0.value = e0 ? e0.p : ""; if(ss0) ss0.value = e0 && e0.s != null ? e0.s : "";
+    var e0 = S.chk[t.value], sb0 = document.getElementById("pbpm"), sf0 = document.getElementById("pflag"), pl0 = document.getElementById("plive");
+    if(sb0) sb0.value = e0 ? e0.p : "";
     if(sf0){ sf0.setAttribute("aria-pressed", String(!!(e0 && e0.f))); var c0 = sf0.querySelector(".ck"); if(c0) c0.classList.toggle("on", !!(e0 && e0.f)); }
-    if(pl0) pl0.innerHTML = e0 ? bandHTML(e0.p) : ""; if(sn0) sn0.textContent = e0 && e0.s ? sleepNote(e0.s) : "";
+    if(pl0) pl0.innerHTML = e0 ? bandHTML(e0.p) : "";
   }
+  if(t.getAttribute && t.getAttribute("data-act") === "mtime" && UI.mf){ UI.mf.t[+t.getAttribute("data-i")] = t.value; }
   if(t.getAttribute && t.getAttribute("data-act") === "kgset"){
     var v = parseFloat(t.value);
     if(!isNaN(v) && v >= 0 && v <= 60){ setKg(t.dataset.id, +t.dataset.w, +t.dataset.d, Math.round(v * 2) / 2); save(); render(); }
@@ -2739,9 +3165,25 @@ document.addEventListener("input", function(ev){
     var pl = document.getElementById("plive"), n = parseFloat(t.value);
     if(pl) pl.innerHTML = (String(t.value).length >= 2 && !isNaN(n)) ? bandHTML(n) : "";
   }
-  if(a === "psleep"){ var sn = document.getElementById("pslnote"), hv = parseFloat(t.value); if(sn) sn.textContent = hv > 0 ? sleepNote(hv) : ""; }
-  if(a === "age"){ var av = parseFloat(t.value); S.age = (av >= 18 && av <= 80) ? Math.round(av) : ""; save(); var zo = document.getElementById("zout"); if(zo) zo.innerHTML = zonesHTML(isNaN(av) ? 0 : av); }
-  if(a === "wt"){ var wv = parseFloat(t.value); S.wt = (wv >= 30 && wv <= 200) ? Math.round(wv * 10) / 10 : ""; save(); var po = document.getElementById("pout"); if(po) po.innerHTML = proteinHTML(isNaN(wv) ? 0 : wv); }
+  if(a === "age"){
+    var av = parseFloat(t.value); S.age = (av >= 18 && av <= 80) ? Math.round(av) : ""; save();
+    var zo = document.getElementById("zout"); if(zo) zo.innerHTML = zonesHTML(isNaN(av) ? 0 : av);
+    ["age", "cage"].forEach(function(id){ var e = document.getElementById(id); if(e && e !== t) e.value = S.age || ""; });
+    calPaintOut();
+  }
+  if(a === "wt"){
+    var wv = parseFloat(t.value); S.wt = (wv >= 35 && wv <= 250) ? Math.round(wv * 10) / 10 : ""; save();
+    var ew = document.getElementById("cwt"); if(ew && ew !== t) ew.value = S.wt || "";
+    calPaintOut();
+  }
+  if(a === "ch" || a === "cbf" || a === "ctw"){
+    var cv = parseFloat(t.value), lim = {ch:[130, 220], cbf:[5, 60], ctw:[35, 250]}[a], key = {ch:"h", cbf:"bf", ctw:"tw"}[a];
+    S.cal = S.cal || {}; S.cal[key] = (cv >= lim[0] && cv <= lim[1]) ? Math.round(cv * 10) / 10 : ""; save(); calPaintOut();
+  }
+  if(a === "mname" && UI.mf) UI.mf.n = t.value;
+  if(a === "mnote" && UI.mf) UI.mf.d = t.value;
+  if(a === "mdays" && UI.mf) UI.mf.days = t.value;
+  if(a === "mtime" && UI.mf) UI.mf.t[+t.getAttribute("data-i")] = t.value;
 });
 document.addEventListener("keydown", function(ev){ if(ev.key === "Escape") closeSheet(); });
 
@@ -2753,6 +3195,7 @@ document.addEventListener("keydown", function(ev){ if(ev.key === "Escape") close
   UI.qi = pickQuote();
   render();
   cloudInit();
+  medStart();
 })();
 
 </script>

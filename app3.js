@@ -186,7 +186,7 @@ document.addEventListener("click", function(ev){
       break;
     case "wipe":
       if(!UI.wipe){ UI.wipe = true; openSheet(settingsHTML()); }
-      else { var keep = {pal:S.pal, theme:S.theme, sound:S.sound, qi:S.qi, qbag:S.qbag, synced:S.synced}; S = freshState(); for(var kq in keep){ S[kq] = keep[kq]; } UI.wipe = false; UI.open = {}; save(); closeSheet(); goView("home"); toast("بدأتِ من جديد"); }
+      else { var keep = {pal:S.pal, theme:S.theme, sound:S.sound, qi:S.qi, qbag:S.qbag, synced:S.synced, med:S.med}; S = freshState(); for(var kq in keep){ S[kq] = keep[kq]; } UI.wipe = false; UI.open = {}; save(); closeSheet(); goView("home"); toast("بدأتِ من جديد"); }
       break;
     case "lseg": UI.ls = ds.v; UI.hall = false; UI.view = "log"; render(); break;
     case "rseg": UI.rs = ds.v; render(); break;
@@ -207,22 +207,47 @@ document.addEventListener("click", function(ev){
       var pv = parseFloat(($("#pbpm") || {}).value), pd = ($("#pdate") || {}).value || dkey();
       if(!(pv >= 30 && pv <= 200)){ toast("اكتبي نبضاً بين 30 و200"); break; }
       if(pd > dkey()) pd = dkey();
-      var psv = parseFloat(($("#psleep") || {}).value), ent = {p:Math.round(pv), u:Date.now()};
-      if(psv > 0 && psv <= 16) ent.s = Math.round(psv * 2) / 2;
+      var ent = {p:Math.round(pv), u:Date.now()};
       if(($("#pflag") || t).getAttribute("aria-pressed") === "true") ent.f = 1;
       S.chk[pd] = ent; save(); render(); toast("حُفظت قراءة " + dfmt(pd));
       break;
     case "pedit":
       var ee = S.chk[ds.k]; if(!ee) break;
-      var sd = $("#pdate"), sb = $("#pbpm"), ss = $("#psleep"), sf = $("#pflag");
-      if(sd) sd.value = ds.k; if(sb) sb.value = ee.p; if(ss) ss.value = ee.s != null ? ee.s : "";
+      var sd = $("#pdate"), sb = $("#pbpm"), sf = $("#pflag");
+      if(sd) sd.value = ds.k; if(sb) sb.value = ee.p;
       if(sf){ sf.setAttribute("aria-pressed", String(!!ee.f)); var ck2 = sf.querySelector(".ck"); if(ck2) ck2.classList.toggle("on", !!ee.f); }
       var pl = $("#plive"); if(pl) pl.innerHTML = bandHTML(ee.p);
-      var sn = $("#pslnote"); if(sn) sn.textContent = ee.s ? sleepNote(ee.s) : "";
       if(sb && sb.scrollIntoView) sb.scrollIntoView({block:"center"});
       break;
     case "pdel": delete S.chk[ds.k]; save(); render(); toast("حُذفت القراءة"); break;
     case "pall": UI.hall = !UI.hall; render(); break;
+    case "csex": case "cact": case "cgoal": case "cpace":
+      S.cal = S.cal || {}; S.cal[{csex:"sex", cact:"act", cgoal:"goal", cpace:"pace"}[a]] = ds.v;
+      if(S.cal.goal === "gain" && S.cal.pace === "fast") S.cal.pace = "mid";
+      save(); calRepaint(); break;
+    case "cmeals": S.cal = S.cal || {}; S.cal.meals = +ds.v; save(); calPaintOut(); break;
+    case "cpg": S.cal = S.cal || {}; S.cal.pg = S.cal.pg ? 0 : 1; save(); calRepaint(); break;
+    case "ccopy": copyText(calText(), "نُسخت الخطة. الصقيها في الملاحظات"); break;
+    case "cshare": shareText("خطة السعرات", calText(), "نُسخت الخطة. الصقيها في الملاحظات"); break;
+    case "madd": UI.mf = medNewForm(); UI.mdel = null; medRepaint(); var mn = document.getElementById("mname"); if(mn) mn.focus(); break;
+    case "medit":
+      medData().list.forEach(function(m){ if(m.id === ds.id) UI.mf = {id:m.id, n:m.n, d:m.d || "", t:(m.t || []).slice(), days:m.days > 0 ? String(m.days) : ""}; });
+      UI.mdel = null; medRepaint(); break;
+    case "mdel":
+      if(UI.mdel === ds.id){
+        medData().list.forEach(function(m){ if(m.id === ds.id){ m.x = 1; m.u = Date.now(); } });
+        UI.mdel = null; save(); medRepaint(); toast("حُذف الدواء");
+      }else{ UI.mdel = ds.id; medRepaint(); }
+      break;
+    case "mtake":
+      var mtd = dkey(), mtk = medData().taken; mtk[mtd] = mtk[mtd] || {};
+      mtk[mtd][ds.k] = {v:medTaken(mtd, ds.k) ? 0 : 1, u:Date.now()};
+      save(); medRepaint(); break;
+    case "msave": if(medSave()){ UI.mf = null; medRepaint(); toast("حُفظ الدواء"); } break;
+    case "mcancel": UI.mf = null; medRepaint(); break;
+    case "mtadd": if(UI.mf && UI.mf.t.length < 6){ UI.mf.t.push("20:00"); medRepaint(); } break;
+    case "mtdel": if(UI.mf && UI.mf.t.length > 1){ UI.mf.t.splice(+ds.i, 1); medRepaint(); } break;
+    case "mics": medDownload(); break;
     case "tpause":
       if(TM){ if(TM.paused){ TM.end = Date.now() + TM.rem; TM.paused = false; } else { TM.rem = Math.max(0, TM.end - Date.now()); TM.paused = true; } tmBuild(); }
       break;
@@ -234,11 +259,12 @@ document.addEventListener("click", function(ev){
 document.addEventListener("change", function(ev){
   var t = ev.target;
   if(t.getAttribute && t.getAttribute("data-act") === "pdate"){
-    var e0 = S.chk[t.value], sb0 = document.getElementById("pbpm"), ss0 = document.getElementById("psleep"), sf0 = document.getElementById("pflag"), pl0 = document.getElementById("plive"), sn0 = document.getElementById("pslnote");
-    if(sb0) sb0.value = e0 ? e0.p : ""; if(ss0) ss0.value = e0 && e0.s != null ? e0.s : "";
+    var e0 = S.chk[t.value], sb0 = document.getElementById("pbpm"), sf0 = document.getElementById("pflag"), pl0 = document.getElementById("plive");
+    if(sb0) sb0.value = e0 ? e0.p : "";
     if(sf0){ sf0.setAttribute("aria-pressed", String(!!(e0 && e0.f))); var c0 = sf0.querySelector(".ck"); if(c0) c0.classList.toggle("on", !!(e0 && e0.f)); }
-    if(pl0) pl0.innerHTML = e0 ? bandHTML(e0.p) : ""; if(sn0) sn0.textContent = e0 && e0.s ? sleepNote(e0.s) : "";
+    if(pl0) pl0.innerHTML = e0 ? bandHTML(e0.p) : "";
   }
+  if(t.getAttribute && t.getAttribute("data-act") === "mtime" && UI.mf){ UI.mf.t[+t.getAttribute("data-i")] = t.value; }
   if(t.getAttribute && t.getAttribute("data-act") === "kgset"){
     var v = parseFloat(t.value);
     if(!isNaN(v) && v >= 0 && v <= 60){ setKg(t.dataset.id, +t.dataset.w, +t.dataset.d, Math.round(v * 2) / 2); save(); render(); }
@@ -251,9 +277,25 @@ document.addEventListener("input", function(ev){
     var pl = document.getElementById("plive"), n = parseFloat(t.value);
     if(pl) pl.innerHTML = (String(t.value).length >= 2 && !isNaN(n)) ? bandHTML(n) : "";
   }
-  if(a === "psleep"){ var sn = document.getElementById("pslnote"), hv = parseFloat(t.value); if(sn) sn.textContent = hv > 0 ? sleepNote(hv) : ""; }
-  if(a === "age"){ var av = parseFloat(t.value); S.age = (av >= 18 && av <= 80) ? Math.round(av) : ""; save(); var zo = document.getElementById("zout"); if(zo) zo.innerHTML = zonesHTML(isNaN(av) ? 0 : av); }
-  if(a === "wt"){ var wv = parseFloat(t.value); S.wt = (wv >= 30 && wv <= 200) ? Math.round(wv * 10) / 10 : ""; save(); var po = document.getElementById("pout"); if(po) po.innerHTML = proteinHTML(isNaN(wv) ? 0 : wv); }
+  if(a === "age"){
+    var av = parseFloat(t.value); S.age = (av >= 18 && av <= 80) ? Math.round(av) : ""; save();
+    var zo = document.getElementById("zout"); if(zo) zo.innerHTML = zonesHTML(isNaN(av) ? 0 : av);
+    ["age", "cage"].forEach(function(id){ var e = document.getElementById(id); if(e && e !== t) e.value = S.age || ""; });
+    calPaintOut();
+  }
+  if(a === "wt"){
+    var wv = parseFloat(t.value); S.wt = (wv >= 35 && wv <= 250) ? Math.round(wv * 10) / 10 : ""; save();
+    var ew = document.getElementById("cwt"); if(ew && ew !== t) ew.value = S.wt || "";
+    calPaintOut();
+  }
+  if(a === "ch" || a === "cbf" || a === "ctw"){
+    var cv = parseFloat(t.value), lim = {ch:[130, 220], cbf:[5, 60], ctw:[35, 250]}[a], key = {ch:"h", cbf:"bf", ctw:"tw"}[a];
+    S.cal = S.cal || {}; S.cal[key] = (cv >= lim[0] && cv <= lim[1]) ? Math.round(cv * 10) / 10 : ""; save(); calPaintOut();
+  }
+  if(a === "mname" && UI.mf) UI.mf.n = t.value;
+  if(a === "mnote" && UI.mf) UI.mf.d = t.value;
+  if(a === "mdays" && UI.mf) UI.mf.days = t.value;
+  if(a === "mtime" && UI.mf) UI.mf.t[+t.getAttribute("data-i")] = t.value;
 });
 document.addEventListener("keydown", function(ev){ if(ev.key === "Escape") closeSheet(); });
 
@@ -265,4 +307,5 @@ document.addEventListener("keydown", function(ev){ if(ev.key === "Escape") close
   UI.qi = pickQuote();
   render();
   cloudInit();
+  medStart();
 })();

@@ -23,12 +23,6 @@ function pulseBand(b){
   if(b < 120) return {lv:"info", t:"فوق 100", tx:"إن كان بعد جهد أو انفعال أو حرارة أو مرض فقد يكون مؤقتاً.", act:"أعيدي القياس بعد جلوس هادئ 5 دقائق. إن تكرر فوق 100 وأنتِ في الراحة فراجعي طبيبتك."};
   return {lv:"warn", t:"مرتفع جداً في الراحة", tx:"هذا أعلى بكثير من المعتاد في الراحة.", act:"أعيدي القياس بعد الجلوس هادئة. إن بقي مرتفعاً أو صاحبه خفقان أو ضيق نفَس أو ألم صدر أو دوار فاطلبي رعاية طبية."};
 }
-function sleepNote(h){
-  if(!(h > 0)) return "";
-  if(h >= 7) return "نومك " + h + " ساعات: ضمن الموصى به للبالغين (7 ساعات فأكثر بانتظام).";
-  if(h >= 6) return "نومك " + h + " ساعات: أقل قليلاً من 7 ساعات الموصى بها بانتظام. ليلة واحدة لا تقلق، والمهم المعتاد.";
-  return "نومك " + h + " ساعات: أقل بوضوح من 7 ساعات الموصى بها بانتظام. النوم من العوامل التي تؤثر في النبض، فخذي قراءة اليوم بحذر.";
-}
 function bandHTML(b, id){
   var x = pulseBand(b), bad = !(b >= 30 && b <= 200);
   return '<div class="pres ' + x.lv + '"' + (id ? ' id="' + id + '"' : '') + ' role="status">' +
@@ -43,8 +37,6 @@ function pulseTrend(){
   if(!used.length) return out;
   var l7 = used.slice(-7).map(function(r){ return r.p; });
   out.avg7 = r1(avg(l7));
-  var sl = used.slice(-7).filter(function(r){ return r.s != null; }).map(function(r){ return r.s; });
-  if(sl.length >= 3) out.sleep7 = r1(avg(sl));
   if(used.length >= 14){
     out.first7 = r1(avg(used.slice(0, 7).map(function(r){ return r.p; })));
     out.diff = r1(out.avg7 - out.first7);
@@ -97,13 +89,6 @@ function zonesHTML(age){
     '<tr><td>شديد</td><td class="num">70–85%</td><td class="num b">' + z.vig[0] + ' إلى ' + z.vig[1] + '</td></tr></tbody></table></div>' +
     '<p class="xs muted">تقدير متوسط يخطئ فردياً. في الحرق الخفيف اعتمدي على اختبار الكلام أولاً: تتكلمين لكن لا تغنين = متوسط.</p>';
 }
-function proteinHTML(kg){
-  if(!(kg >= 30 && kg <= 200)) return '<p class="xs muted">اكتبي وزنك بالكيلوجرام (من 30 إلى 200) ليظهر المدى.</p>';
-  var lo = Math.round(kg * 0.8), hi = Math.round(kg * 1.6);
-  return '<div class="zrow"><div><div class="xs muted">المدى التقريبي يومياً</div><div class="big num">' + lo + ' – ' + hi + '<small> جم</small></div></div></div>' +
-    '<p class="xs muted">من 0.8 إلى 1.6 جم لكل كجم. لبرنامج خفيف مثل برنامجك أقدّر أن الجزء الأدنى إلى الأوسط من المدى يكفي (تقدير مني لا من دراسة). عند مرض كلوي أو حمل أو رضاعة اسألي طبيبتك أولاً.</p>';
-}
-
 /* ============ عدّاد النبض بالضغط ============ */
 var PC = {on:false, taps:0, t0:0, tick:null, done:false, bpm:0};
 function pcStop(){ if(PC.tick){ clearInterval(PC.tick); PC.tick = null; } PC.on = false; }
@@ -154,6 +139,15 @@ function mergeStates(L, C){
     });
     M.log[id] = Object.keys(map).map(function(q){ return map[q]; });
   });
+  M.cal = Object.assign({}, older.cal || {}, newer.cal || {});
+  var ml = {}; ((older.med || {}).list || []).concat((newer.med || {}).list || []).forEach(function(m){ if(m && m.id && (!ml[m.id] || (m.u || 0) >= (ml[m.id].u || 0))) ml[m.id] = m; });
+  M.med = {list:Object.keys(ml).map(function(i){ return ml[i]; }), taken:{}};
+  var td = {}; Object.keys((older.med || {}).taken || {}).concat(Object.keys((newer.med || {}).taken || {})).forEach(function(d){ td[d] = 1; });
+  Object.keys(td).forEach(function(d){
+    var a = ((older.med || {}).taken || {})[d] || {}, b = ((newer.med || {}).taken || {})[d] || {}, o = {};
+    Object.keys(a).concat(Object.keys(b)).forEach(function(k){ var x = a[k], y = b[k]; o[k] = !x ? y : (!y ? x : ((y.u || 0) >= (x.u || 0) ? y : x)); });
+    M.med.taken[d] = o;
+  });
   M.chk = {};
   var dk = {}; Object.keys(older.chk || {}).concat(Object.keys(newer.chk || {})).forEach(function(d){ dk[d] = 1; });
   Object.keys(dk).forEach(function(d){
@@ -175,7 +169,7 @@ function mergeStates(L, C){
 var CL = {st:"local", na:false, at:0, uid:null, ref:null, timer:null, busy:false, again:false, retry:null, lastPull:0};
 function hasProgress(o){
   o = o || S;
-  return !!(Object.keys(o.done || {}).length || Object.keys(o.log || {}).length || Object.keys(o.chk || {}).length ||
+  return !!(Object.keys(o.done || {}).length || Object.keys(o.log || {}).length || Object.keys(o.chk || {}).length || ((o.med || {}).list || []).length ||
     Object.keys(o.body || {}).some(function(w){ var b = o.body[w]; return b && ((b.pulse !== "" && b.pulse != null) || (b.wall || []).some(function(x){ return x; }) || b.note); }));
 }
 function cloudJson(){

@@ -108,8 +108,7 @@ function logPulse(){
     '<div class="fld"><label for="pbpm">نبضات القلب في الدقيقة</label><div class="row" style="gap:10px"><input class="inp num bigin" id="pbpm" type="number" inputmode="numeric" min="30" max="200" placeholder="مثلاً 72" value="' + esc(pre) + '" data-act="pbpm" style="flex:1;min-width:0"><button class="btn quiet" data-act="pcount">' + ico("heart") + 'عدّيني</button></div>' +
     '<span class="xs muted">لا تعرفين كيف تعدّين؟ اضغطي «عدّيني» وسأحسب لك.</span></div>' +
     '<div id="plive">' + (pre !== "" && +pre >= 30 ? bandHTML(+pre) : "") + '</div>' +
-    '<div class="fld"><label for="psleep">ساعات نومك الليلة الماضية (اختياري)</label><input class="inp num" id="psleep" type="number" inputmode="decimal" step="0.5" min="0" max="16" placeholder="مثلاً 7" value="' + (cur && cur.s != null ? cur.s : "") + '" data-act="psleep"><span class="xs muted" id="pslnote">' + (cur && cur.s ? sleepNote(cur.s) : "") + '</span></div>' +
-    '<div class="group">' + chkBtn("pflag", !!(cur && cur.f), "يوم غير معتاد", "مرض أو توتر أو قهوة قبل القياس أو قلة نوم. لا يدخل في المتوسط والمقارنة.", 'id="pflag"') + '</div>' +
+    '<div class="group">' + chkBtn("pflag", !!(cur && cur.f), "يوم غير معتاد", "مرض أو توتر أو قهوة قبل القياس أو سهر. لا يدخل في المتوسط والمقارنة.", 'id="pflag"') + '</div>' +
     '<button class="btn full" data-act="psave">احفظي القراءة</button></section>';
 
   if(rows.length){
@@ -121,13 +120,12 @@ function logPulse(){
       pulseChart(rows) +
       (rows.length > 1 ? '<p class="xs muted">المظلّل هو النطاق الطبيعي (60 إلى 100). النقاط المفرغة أيام علّمتِها «غير معتادة».</p>' : '<p class="xs muted">سجّلي قراءة ثانية ليظهر الرسم.</p>') +
       '<p class="sm">' + trendText(t) + '</p>' +
-      (t.sleep7 != null ? '<p class="xs muted num">متوسط نومك في آخر قراءاتك: ' + t.sleep7 + ' ساعة. ' + (t.sleep7 >= 7 ? "ضمن الموصى به." : "أقل من 7 ساعات الموصى بها للبالغين بانتظام.") + '</p>' : '') +
       '<div class="chips">' + evChip("trend", "كيف تُحسب؟ ") + evChip("rhrex", "هل ينزل بالتمرين؟ ") + '</div></section>';
 
     var all = rows.slice().reverse(), shown = UI.hall ? all : all.slice(0, 7);
     h += sech("list", "قراءاتي", "اضغطي «تعديل» لتغيير قراءة") +
       '<div class="group">' + shown.map(function(r){
-        return '<div class="hrow"><div class="grow"><div class="b">' + dfmt(r.k) + '</div><div class="xs muted">' + pulseBand(r.p).t + (r.s != null ? " · نوم " + r.s + " س" : "") + (r.f ? " · غير معتاد" : "") + '</div></div><div class="hv num">' + r.p + '</div>' +
+        return '<div class="hrow"><div class="grow"><div class="b">' + dfmt(r.k) + '</div><div class="xs muted">' + pulseBand(r.p).t + (r.f ? " · غير معتاد" : "") + '</div></div><div class="hv num">' + r.p + '</div>' +
           '<button class="ibtn" data-act="pedit" data-k="' + r.k + '">تعديل</button><button class="ibtn" data-act="pdel" data-k="' + r.k + '" aria-label="حذف قراءة ' + dfmt(r.k) + '">حذف</button></div>';
       }).join("") + '</div>' +
       (all.length > 7 ? '<button class="btn quiet full mt" data-act="pall">' + (UI.hall ? "عرض آخر 7 فقط" : "عرض كل القراءات (" + all.length + ")") + '</button>' : '');
@@ -163,23 +161,20 @@ function tcard(id, icon, title, sub, evk, body){
     (evk ? '<div class="tfoot"><span class="xs muted">قوة الدليل · اضغطي لترين المصدر</span>' + evChip(evk) + '</div>' : '') + '</section>';
 }
 function renderTools(){
-  var h = phead("calc", "أدواتي", "حاسبات صغيرة مبنية على مصادر. كل بطاقة تذكر قوة دليلها، واضغطي على الشارة لترين المصدر.");
-  h += tiles("tjump", "", [["t-heart", "عدّاد النبض", "heart"], ["t-zones", "مناطق النبض", "clock"], ["t-protein", "البروتين", "leaf"], ["t-talk", "شدة الجهد", "sun"], ["t-sleep", "النوم", "moon"]], "data-id");
+  var h = phead("calc", "أدواتي", "عدّاد النبض وحاسبة السعرات وتذكير الأدوية وغيرها. كل بطاقة تذكر قوة دليلها، واضغطي على الشارة لترين المصدر.");
+  h += tiles("tjump", "", [["t-heart", "عدّاد النبض", "heart"], ["t-cal", "السعرات", "flame"], ["t-med", "الأدوية", "pill"], ["t-zones", "مناطق النبض", "clock"], ["t-talk", "شدة الجهد", "sun"]], "data-id");
   h += '<div class="col">';
   h += tcard("t-heart", "heart", "عدّاد النبض", "عدّي نبضك بالضغط مع كل نبضة", "rhr",
     '<p class="sm">تعدّين نبضك 30 ثانية بالضغط مع كل نبضة، ويضرب الموقع الرقم في 2 ويفسّره لك. الطريقة نفسها التي يذكرها المرجع الطبي (30 ثانية × 2).</p>' +
     '<div class="row wrap" style="gap:10px"><button class="btn" style="flex:1 1 140px" data-act="pcount">ابدئي العدّ</button><button class="btn quiet" style="flex:1 1 120px" data-act="topulse">سجلّ النبض</button></div>');
+  h += calCardHTML();
+  h += medCardHTML();
   h += tcard("t-zones", "clock", "مناطق نبض التمرين", "نبضك الأقصى ومناطق الجهد حسب عمرك", "zones",
     '<div class="fld"><label for="age">عمرك بالسنوات</label><input class="inp num" id="age" type="number" inputmode="numeric" min="18" max="80" placeholder="مثلاً 28" value="' + (S.age ? esc(S.age) : "") + '" data-act="age"></div><div id="zout" class="col">' + zonesHTML(+S.age) + '</div>');
-  h += tcard("t-protein", "leaf", "احتياجك من البروتين", "مدى يومي تقريبي حسب وزنك", "protein",
-    '<div class="fld"><label for="wt">وزنك بالكيلوجرام</label><input class="inp num" id="wt" type="number" inputmode="decimal" min="30" max="200" placeholder="مثلاً 60" value="' + (S.wt ? esc(S.wt) : "") + '" data-act="wt"></div><div id="pout" class="col">' + proteinHTML(+S.wt) + '</div>');
   h += tcard("t-talk", "sun", "كيف أعرف شدة جهدي؟", "اختبار الكلام بلا أي جهاز", "talk",
     '<ul class="lst"><li><b>خفيف:</b> تتكلمين وتغنين بسهولة.</li><li><b>متوسط:</b> تتكلمين لكن لا تقدرين على الغناء. هذا هدفك في معظم الحرق.</li><li><b>شديد:</b> كلمات قليلة قبل أن تلتقطي نفَسك.</li></ul>' +
     '<p class="xs muted">اختبار الكلام يغنيك عن أي جهاز، ويناسب كل الأعمار واللياقات.</p>');
-  h += tcard("t-sleep", "moon", "النوم والتعافي", "ساعات نومك وأثرها على تعافيك", "sleep",
-    '<p class="sm">يُنصح البالغون بـ <b>7 ساعات نوم فأكثر</b> بانتظام. اكتبي ساعات نومك مع نبض الصباح لتري متوسطها بجانب اتجاه نبضك.</p>' +
-    '<button class="btn quiet full" data-act="topulse">سجّلي نومي مع النبض</button>');
-  h += '</div><div class="warn mt">الأرقام هنا تقديرات عامة لا تشخّص حالتك. مع أي دواء للقلب أو الضغط أو حالة صحية اسألي طبيبتك عن النبض المناسب لك.</div>';
+  h += '</div><div class="warn mt">الأرقام هنا تقديرات عامة لا تشخّص حالتك. مع أي دواء للقلب أو الضغط أو حالة صحية اسألي طبيبك عن النبض المناسب لك.</div>';
   return h;
 }
 
@@ -238,7 +233,8 @@ var EVGROUPS = [
   ["dumb", "الحركة والقوة", ["who", "talk", "acsm", "lowload", "circuit"]],
   ["ref", "الاستقامة", ["neck", "sh", "kyph", "hip", "glute", "core", "wall"]],
   ["heart", "القلب والنبض", ["lowimp", "rhr", "rhrex", "zones", "trend"]],
-  ["leaf", "الصحة اليومية", ["sleep", "protein", "cycle"]]
+  ["flame", "التغذية والأدوية", ["energy", "protein", "macros", "meds"]],
+  ["leaf", "الصحة اليومية", ["sleep", "cycle"]]
 ];
 function refEvid(){
   var cnt = {strong:0, mid:0, low:0, logic:0}, tot = 0;
@@ -275,8 +271,8 @@ function refDay(){
     '<p>اقتراح عملي مني بلا دراسة مباشرة: إن نمتِ قليلاً وشعرتِ بثقل، فخففي الوزن درجة أو أنهي بجولة أقل بدل أن تتركي الجلسة.</p>');
   h += acc("البروتين والأكل",
     '<div class="row sp wrap"><span class="b">كم أحتاج؟</span>' + evChip("protein") + '</div>' +
-    '<p>تتوقف الفائدة الإضافية في بناء العضلات عند نحو 1.6 جم لكل كجم يومياً بحسب تحليل تجميعي، وأقل رقم شائع للبالغين 0.8 جم/كجم. ستجدين مدى يخصّك بوزنك في «أدواتي».</p>' +
-    '<button class="btn quiet full" data-act="go" data-v="tools">افتحي الحاسبة</button>');
+    '<p>تتوقف الفائدة الإضافية في بناء العضلات عند نحو 1.6 جم لكل كجم يومياً بحسب تحليل تجميعي، وأقل رقم شائع للبالغين 0.8 جم/كجم. حاسبة «السعرات» في «أدواتي» تعطيك رقمك بوزنك وهدفك، وتوزّعه على وجباتك.</p>' +
+    '<button class="btn quiet full" data-act="go" data-v="tools">افتحي حاسبة السعرات</button>');
   h += acc("الدورة الشهرية والتمرين",
     '<div class="row sp wrap"><span class="b">هل أغيّر برنامجي؟</span>' + evChip("cycle") + '</div>' +
     '<p>الأدلة ضعيفة وتشير إلى فرق ضئيل جداً في الأداء بين أطوار الدورة، ولا تكفي لتعميم تعديل واحد على الجميع. الأنسب أن تتبعي ما تشعرين به أنتِ.</p>' +

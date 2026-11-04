@@ -2,7 +2,7 @@
 var S = {week:1, done:{}, log:{}, walks:{}, body:{}, alt:{}, gear:{}, pos:{}, chk:{}, pal:"rose", theme:"light", sound:true};
 var PALS = ["rose", "lilac", "sage", "sand"];
 var LVS = {strong:"قوي", mid:"متوسط", low:"محدود", logic:"منطقي"};
-var UI = {view:"home", w:1, d:1, open:{}, stg:{}, wipe:false, ls:"ov", rs:"prog", hall:false};
+var UI = {view:"home", w:1, d:1, open:{}, stg:{}, wipe:false, ls:"ov", rs:"prog", hall:false, mf:null, mdel:null};
 var VOLATILE = {qi:1, qbag:1, qh:1, ts:1, synced:1};
 var SYNCH = "";
 
@@ -35,6 +35,10 @@ function normState(){
   if(S.tv !== 2){ if(S.theme === "auto") S.theme = "light"; S.tv = 2; }
   if(typeof S.ts !== "number") S.ts = 0;
   if(typeof S.synced !== "number") S.synced = 0;
+  if(!S.cal || typeof S.cal !== "object" || Array.isArray(S.cal)) S.cal = {};
+  if(!S.med || typeof S.med !== "object" || Array.isArray(S.med)) S.med = {list:[], taken:{}};
+  if(!Array.isArray(S.med.list)) S.med.list = [];
+  if(!S.med.taken || typeof S.med.taken !== "object") S.med.taken = {};
   migrateOrd(S);
 }
 function canon(v){
@@ -112,6 +116,8 @@ var ICO = {
   shield:'<path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/>',
   user:'<circle cx="12" cy="5" r="2"/><path d="M12 8v6M8 10h8M12 14l-3 7M12 14l3 7"/>',
   moon:'<path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/>',
+  flame:'<path d="M12 3c.8 3.4 5 5.4 5 10a5 5 0 0 1-10 0c0-2 1-3.4 2-4.4.3 1.4 1 2 2 2.2C10.8 8 11 5.6 12 3z"/>',
+  pill:'<g transform="rotate(-40 12 12)"><rect x="3" y="8" width="18" height="8" rx="4"/><path d="M12 8v8"/></g>',
   flask:'<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/><path d="M8 15h8"/>'
 };
 function ico(n, c){ return '<svg class="' + (c || "") + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICO[n] + '</svg>'; }
@@ -399,10 +405,10 @@ function startItem(w, d, blk, j){
 }
 
 var toastT = null;
-function toast(m){
+function toast(m, ms){
   var el = $("#toast"); if(!el) return;
   el.hidden = false; el.innerHTML = '<span>' + esc(m) + '</span>';
-  clearTimeout(toastT); toastT = setTimeout(function(){ el.hidden = true; }, 2400);
+  clearTimeout(toastT); toastT = setTimeout(function(){ el.hidden = true; }, ms || 2400);
 }
 function openSheet(html){
   var sh = $("#shade"); sh.hidden = false;
