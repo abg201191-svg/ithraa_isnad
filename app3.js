@@ -226,7 +226,6 @@ document.addEventListener("click", function(ev){
       if(S.cal.goal === "gain" && S.cal.pace === "fast") S.cal.pace = "mid";
       save(); calRepaint(); break;
     case "cmeals": S.cal = S.cal || {}; S.cal.meals = +ds.v; save(); calPaintOut(); break;
-    case "cpg": S.cal = S.cal || {}; S.cal.pg = S.cal.pg ? 0 : 1; save(); calRepaint(); break;
     case "ccopy": copyText(calText(), "نُسخت الخطة. الصقيها في الملاحظات"); break;
     case "cshare": shareText("خطة السعرات", calText(), "نُسخت الخطة. الصقيها في الملاحظات"); break;
     case "madd": UI.mf = medNewForm(); UI.mdel = null; medRepaint(); var mn = document.getElementById("mname"); if(mn) mn.focus(); break;

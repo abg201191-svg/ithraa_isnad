@@ -24,7 +24,7 @@ var MEAL_SCH = {
 function calOf(){
   var c = S.cal || {};
   return {sex:c.sex || "", age:+S.age || 0, h:+c.h || 0, w:+S.wt || 0, bf:+c.bf || 0, act:c.act || "light", goal:c.goal || "lose", pace:c.pace || "mid", tw:+c.tw || 0,
-    meals:(+c.meals === 3 || +c.meals === 5) ? +c.meals : 4, pg:!!c.pg};
+    meals:(+c.meals === 3 || +c.meals === 5) ? +c.meals : 4};
 }
 
 /* الحساب: حرق أساسي ← احتياج يومي ← هدف بنسبة من وزنك ← ماكروز ← توزيع على الوجبات */
@@ -137,7 +137,6 @@ function calSeg(act, cur, items, cls){
 }
 
 function calOutHTML(){
-  if(S.cal && S.cal.pg) return '<div class="warn">الحمل والرضاعة لهما احتياجات خاصة، ولا تناسبهما حاسبة عامة. اسألي طبيبتك أو اختصاصية التغذية عن سعراتك.</div>';
   var c = calOf(), R = calcPlan(c);
   if(!R.ok) return '<p class="xs muted">' + gz("أكملي", "أكمل") + ' الحقول التالية لتظهر خطتك: ' + R.miss.join("، ") + '.</p>';
   var g = c.sex === "m";
@@ -191,8 +190,7 @@ function calCardHTML(){
       '<p class="xs muted">' + (c.goal === "lose" ? "الوتيرة نسبة من وزنك أسبوعياً: هادئ 0.25% ومتوسط 0.5% وأسرع 0.75%. هذا بدل خصم 500 ثابتاً للجميع، فالخصم الواحد كبير على الأخفّ وزناً. وللمقارنة، مراجعة لنزول الدهون عند الرياضيين توصي بنحو 0.5 إلى 1% أسبوعياً." : "الزيادة نسبة من احتياجك: هادئ 5% ومتوسط 10%. الزيادة الأكبر تذهب غالباً دهوناً لا عضلاً.") + '</p></div>';
   }
   if(c.goal === "lose") body += '<div class="fld"><label for="ctw">' + gz("الوزن الذي تريدين الوصول إليه", "الوزن الذي تريد الوصول إليه") + ' (كجم) <span class="xs muted">(اختياري)</span></label><input class="inp num" id="ctw" type="number" inputmode="decimal" min="35" max="250" placeholder="مثلاً 58" value="' + (cc.tw ? esc(cc.tw) : "") + '" data-act="ctw"></div>';
-  body += '<div class="group">' + chkBtn("cpg", !!(S.cal && S.cal.pg), "أنا حامل أو مرضعة", "تظهر لك رسالة بدل الأرقام", "") + '</div>' +
-    '<div id="cout" class="col">' + calOutHTML() + '</div>' +
+  body += '<div id="cout" class="col">' + calOutHTML() + '</div>' +
     '<div class="warn">للبالغين الأصحاء من 18 سنة فأكثر. لا تناسب الحمل والرضاعة ولا من لديه سكري أو مرض كلوي أو قلبي أو تاريخ اضطراب أكل. هذه تقديرات عامة لا تغني عن طبيب أو اختصاصي تغذية.</div>' +
     '<div class="tfoot"><span class="xs muted">قوة الدليل · اضغطي لترين المصدر</span><div class="row wrap" style="gap:8px">' + evChip("energy", "السعرات: ") + evChip("protein", "البروتين: ") + evChip("macros", "التوزيع: ") + '</div></div>';
   return '<section class="card col tool" id="t-cal"><div class="th"><span class="si">' + ico("flame") + '</span><div class="grow"><h2 class="h3">السعرات والماكروز</h2><div class="tsub">' + gz("اختاري هدفك فتعرفي", "اختر هدفك فتعرف") + ' كم تأكل' + gz("ين", "") + ' من السعرات والبروتين والكارب والدهون</div></div></div>' + body + '</section>';

@@ -149,6 +149,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
   ok(sh && sh.text.includes('1,780') && sh.title, 'المشاركة ترسل النص');
   await p.evaluate(() => { delete navigator.share; });
 
+  ok(await p.locator('[data-act="cpg"]').count() === 0 && !/حامل أو مرضعة/.test(await p.locator('#t-cal').innerText()), 'حُذف خيار الحمل والرضاعة');
   // نصوص المؤنث/المذكر في الشرح
   const how = await p.evaluate(() => { document.querySelectorAll('#t-cal details').forEach(d => d.open = true); return document.getElementById('t-cal').innerText; });
   ok(!/ب2/.test(how) && /التزمي 2 إلى 3 أسابيع/.test(how) && /زني نفسك/.test(how), 'شرح التعديل بصيغة المؤنث بلا أخطاء');
@@ -159,13 +160,6 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
   await p.click('[data-act="cgoal"][data-v="gain"]');
   ok(/لم يزد وزنك/.test(await p.evaluate(() => { document.querySelectorAll('#t-cal details').forEach(d => d.open = true); return document.getElementById('t-cal').innerText; })), 'نصائح التعديل تتبع الهدف');
   await p.click('[data-act="cgoal"][data-v="lose"]'); await p.click('[data-act="cpace"][data-v="mid"]');
-
-  // حمل ورضاعة
-  await p.click('[data-act="cpg"]');
-  let pgt = await p.locator('#cout').innerText();
-  ok(/حامل|الحمل/.test(pgt) && !/1,780/.test(pgt), 'الحمل يخفي الأرقام');
-  await p.click('[data-act="cpg"]');
-  ok((await p.locator('#cout').innerText()).includes('1,780'), 'إلغاء الحمل يعيد الأرقام');
 
   // حالات حد
   await p.fill('#cage', '17');
@@ -301,8 +295,8 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     let bad = [];
     const chk = async (tag) => { const r = await q.evaluate(() => ({ sw: document.documentElement.scrollWidth, cw: document.documentElement.clientWidth })); if (r.sw > r.cw) bad.push(tag + ' ' + r.sw + '>' + r.cw); };
     await chk('results'); await q.evaluate(() => { UI.mf = {id:null, n:'', d:'', t:['08:00', '12:00', '16:00', '20:00'], days:''}; medRepaint(); }); await chk('form');
-    await q.evaluate(() => { UI.mf = null; S.cal.pg = 1; calRepaint(); medRepaint(); }); await chk('pg');
-    await q.evaluate(() => { S.cal.pg = 0; S.cal.goal = 'gain'; S.cal.pace = 'mid'; calRepaint(); }); await chk('gain');
+    await q.evaluate(() => { UI.mf = null; calRepaint(); medRepaint(); }); await chk('pg');
+    await q.evaluate(() => { S.cal.goal = 'gain'; S.cal.pace = 'mid'; calRepaint(); }); await chk('gain');
     if (W === 320 || W === 390) { await q.evaluate(() => { S.cal.goal = 'lose'; S.cal.pace = 'fast'; UI.mf = null; calRepaint(); medRepaint(); window.scrollTo(0, 0); }); await q.screenshot({ path: 'v12-' + W + (dark ? 'd' : 'l') + '-tools.png', fullPage: true }); }
     ok(bad.length === 0 && e2.length === 0, 'W' + W + (dark ? ' dark' : '') + ' بلا تمرير أفقي ' + bad.join('|') + ' ' + e2.join(';'));
     await c2.close();
